@@ -1,6 +1,8 @@
 import React, { useState, Component } from 'react'
 import { StatusBar as ExpoStatusBar } from 'expo-status-bar'
 import Slider from './components/Slider'
+import { NavigationContainer } from '@react-navigation/native'
+import BottomTabNavigator from './navigation/TabNavigator'
 
 import {
   SafeAreaView,
@@ -33,7 +35,9 @@ export default class App extends React.Component {
         <StatusBar
           barStyle={Platform.OS === 'ios' ? 'dark-content' : 'light-content'}
         />
-        <Slider imgMassivSlider={imgMassivSlider} />
+        <NavigationContainer>
+          <BottomTabNavigator />
+        </NavigationContainer>
       </SafeAreaView>
     )
   }

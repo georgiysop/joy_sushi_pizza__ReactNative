@@ -78,10 +78,11 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#fff',
+
   },
 
   wrap: {
-    resizeMode: 'stretch',
+    resizeMode: 'cover',
     width: WIDTH,
     height: HEIGHT * 0.34,
   },
