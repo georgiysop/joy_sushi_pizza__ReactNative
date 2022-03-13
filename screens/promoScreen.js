@@ -17,20 +17,22 @@ import {
 
 const Home = () => {
   return (
-    <View style={styles.center}>
-      <Image source={require('../assets/promo/1.png')} />
-      <Text>
-        С понедельника по пятницу на роллы с 11:00 - 16:00 скидка 15 %
-      </Text>
-      <Image source={require('../assets/promo/2.png')} />
-      <Image source={require('../assets/promo/3.png')} />
-      <Text>
-        {' '}
-        Акция 1+1=3 распространяется на все пиццы кроме пицц 25см и акционного
-        товара
-      </Text>
-      <Image source={require('../assets/promo/4.png')} />
-    </View>
+    <ScrollView>
+      <View style={styles.center}>
+        <Image source={require('../assets/promo/1.png')} />
+        <Text>
+          С понедельника по пятницу на роллы с 11:00 - 16:00 скидка 15 %
+        </Text>
+        <Image source={require('../assets/promo/2.png')} />
+        <Image source={require('../assets/promo/3.png')} />
+        <Text>
+          {' '}
+          Акция 1+1=3 распространяется на все пиццы кроме пицц 25см и акционного
+          товара
+        </Text>
+        <Image source={require('../assets/promo/4.png')} />
+      </View>
+    </ScrollView>
   )
 }
 

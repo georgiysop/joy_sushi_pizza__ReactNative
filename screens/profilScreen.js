@@ -18,7 +18,16 @@ import {
 const Home = () => {
   return (
     <View style={styles.center}>
-      <Text>This is the profile screen</Text>
+      <View>
+        <Button
+          title="Быстрый заказ"
+          color="#f194ff"
+          titleStyle={{ fontWeight: '700' }}
+          styles={styles.separator}
+        />
+      </View>
+      <Button title="Войти" color="#f194ff" />
+      <Button title="Регистрация" color="#f194ff" />
     </View>
   )
 }
@@ -29,6 +38,21 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     textAlign: 'center',
+  },
+  separator: {
+    backgroundColor: 'rgba(111, 202, 186, 1)',
+    borderColor: 'transparent',
+    borderWidth: 0,
+    borderRadius: 5,
+    paddingVertical: 5,
+  },
+  buttonsContainer: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    justifyContent: 'center',
+    alignItems: 'center',
+    width: '100%',
+    marginVertical: 20,
   },
 })
 

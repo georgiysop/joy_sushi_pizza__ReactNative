@@ -20,6 +20,7 @@ const Home = () => {
     <View style={styles.center}>
       <Image source={require('../assets/basket/clearBasket.png')} />
       <Text>В корзине пусто</Text>
+      <Button title="Перейти к заказам" color="#f194ff" />
     </View>
   )
 }
