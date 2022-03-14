@@ -15,7 +15,7 @@ import {
   AppRegistry,
 } from 'react-native'
 
-const Home = () => {
+const Info = () => {
   return (
     <View style={styles.center}>
       <Text>This is the info screen</Text>
@@ -32,4 +32,4 @@ const styles = StyleSheet.create({
   },
 })
 
-export default Home
+export default Info

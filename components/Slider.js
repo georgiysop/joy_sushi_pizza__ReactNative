@@ -76,13 +76,11 @@ export default class Slider extends React.Component {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
     backgroundColor: '#fff',
-
   },
 
   wrap: {
-    resizeMode: 'cover',
+    resizeMode: 'stretch',
     width: WIDTH,
     height: HEIGHT * 0.34,
   },

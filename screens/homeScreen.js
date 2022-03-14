@@ -1,4 +1,5 @@
 import React from 'react'
+import Slider from '../components/Slider'
 import {
   SafeAreaView,
   StyleSheet,
@@ -15,20 +16,23 @@ import {
   AppRegistry,
 } from 'react-native'
 
+const imgMassivSlider = [
+  require('../assets/popular/spaisi.jpg'),
+  require('../assets/popular/furo.jpeg'),
+]
+
 const Home = () => {
   return (
-    <View style={styles.center}>
-      <Text>This is the home screen</Text>
+    <View style={styles.container}>
+      <Slider imgMassivSlider={imgMassivSlider} />
+      <Text>fdsfsdf</Text>
     </View>
   )
 }
 
 const styles = StyleSheet.create({
-  center: {
+  container: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    textAlign: 'center',
   },
 })
 

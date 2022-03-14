@@ -1,6 +1,5 @@
 import React, { useState, Component } from 'react'
 import { StatusBar as ExpoStatusBar } from 'expo-status-bar'
-import Slider from './components/Slider'
 import { NavigationContainer } from '@react-navigation/native'
 import BottomTabNavigator from './navigation/TabNavigator'
 
@@ -22,11 +21,6 @@ import {
 
 const WIDTH = Dimensions.get('window').width
 const HEIGHT = Dimensions.get('window').height
-
-const imgMassivSlider = [
-  require('./assets/popular/spaisi.jpg'),
-  require('./assets/popular/furo.jpeg'),
-]
 
 export default class App extends React.Component {
   render() {

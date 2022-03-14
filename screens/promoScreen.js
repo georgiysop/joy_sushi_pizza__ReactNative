@@ -15,7 +15,7 @@ import {
   AppRegistry,
 } from 'react-native'
 
-const Home = () => {
+const Promo = () => {
   return (
     <ScrollView>
       <View style={styles.center}>
@@ -45,4 +45,4 @@ const styles = StyleSheet.create({
   },
 })
 
-export default Home
+export default Promo

@@ -1,37 +1,27 @@
-import React from 'react'
-import {
-  SafeAreaView,
-  StyleSheet,
-  StatusBar,
-  Platform,
-  ScrollView,
-  View,
-  Text,
-  BackHandler,
-  Button,
-  Alert,
-  Image,
-  Dimensions,
-  AppRegistry,
-} from 'react-native'
+import { React } from 'react'
+import { StyleSheet, View, Text, Image } from 'react-native'
+import CustomButton1 from '../components/CustomButton'
 
-const Home = () => {
+const Basket = () => {
   return (
-    <View style={styles.center}>
+    <View style={styles.container}>
       <Image source={require('../assets/basket/clearBasket.png')} />
       <Text>В корзине пусто</Text>
-      <Button title="Перейти к заказам" color="#f194ff" />
+      <CustomButton1 title="Перейти к заказам" />
     </View>
   )
 }
 
 const styles = StyleSheet.create({
-  center: {
+  container: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
     textAlign: 'center',
   },
+  btnstyle: {
+    backgroundColor: '#000',
+  },
 })
 
-export default Home
+export default Basket
