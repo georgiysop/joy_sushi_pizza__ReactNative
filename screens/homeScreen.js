@@ -1,5 +1,6 @@
 import React from 'react'
 import Slider from '../components/Slider'
+import Ionic from 'react-native-vector-icons/Ionicons'
 import {
   SafeAreaView,
   StyleSheet,
@@ -24,8 +25,15 @@ const imgMassivSlider = [
 const Home = () => {
   return (
     <View style={styles.container}>
-      <Slider imgMassivSlider={imgMassivSlider} />
-      <Text>fdsfsdf</Text>
+      <ScrollView>
+        <Slider imgMassivSlider={imgMassivSlider} />
+        <Slider imgMassivSlider={imgMassivSlider} />
+        <Slider imgMassivSlider={imgMassivSlider} />
+        <Slider imgMassivSlider={imgMassivSlider} />
+        <Slider imgMassivSlider={imgMassivSlider} />
+        <Ionic name='ios-home'/>
+        <Text>fdsfsdf</Text>
+      </ScrollView>
     </View>
   )
 }
