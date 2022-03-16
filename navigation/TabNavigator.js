@@ -53,8 +53,10 @@ const BottomTabNavigator = () => {
         },
         tabBarActiveTintColor: 'tomato',
         tabBarInactiveTintColor: 'gray',
-        tabBarStyle: { height: 50 },
+        tabBarStyle: { height: 50},
         tabBarShowLabel: false,
+        headerTitleAlign: 'center', 
+
       })}
     >
       <Tab.Screen

@@ -11,6 +11,9 @@
   },
   "dependencies": {
     "@expo-google-fonts/dev": "^0.2.2",
+    "@expo-google-fonts/open-sans": "^0.2.2",
+    "@expo-google-fonts/philosopher": "^0.2.2",
+    "@expo-google-fonts/roboto": "^0.2.2",
     "@khanshamshad32/carousel": "^1.0.1",
     "@react-native-community/masked-view": "^0.1.11",
     "@react-navigation/bottom-tabs": "^6.2.0",
