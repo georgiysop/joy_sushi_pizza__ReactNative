@@ -1,11 +1,13 @@
 import { React } from 'react'
 import { StyleSheet, View, Text, Image } from 'react-native'
 import CustomButton1 from '../components/CustomButton'
+import Ionicons from 'react-native-vector-icons/Ionicons'
 
 const Basket = () => {
   return (
     <View style={styles.container}>
       <Image source={require('../assets/basket/clearBasket.png')} />
+      {/* <Ionicons name={'ios-basket-outline'}  size={200} /> */}
       <Text style={styles.basketclear}>В корзине пусто</Text>
       <CustomButton1 title="Перейти к заказам" />
     </View>

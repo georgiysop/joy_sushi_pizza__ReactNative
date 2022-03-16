@@ -1,5 +1,4 @@
 import React, { useState, Component } from 'react'
-import { StatusBar as ExpoStatusBar } from 'expo-status-bar'
 
 import {
   SafeAreaView,
@@ -9,12 +8,8 @@ import {
   ScrollView,
   View,
   Text,
-  BackHandler,
-  Button,
-  Alert,
   Image,
   Dimensions,
-  AppRegistry,
 } from 'react-native'
 
 const WIDTH = Dimensions.get('window').width

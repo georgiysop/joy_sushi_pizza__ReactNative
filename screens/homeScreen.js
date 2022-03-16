@@ -1,6 +1,8 @@
 import React from 'react'
 import Slider from '../components/Slider'
 import Ionic from 'react-native-vector-icons/Ionicons'
+import HomeSVG from '../assets/navigatorSVG/homeSVG'
+
 import {
   SafeAreaView,
   StyleSheet,
@@ -27,12 +29,8 @@ const Home = () => {
     <View style={styles.container}>
       <ScrollView>
         <Slider imgMassivSlider={imgMassivSlider} />
-        <Slider imgMassivSlider={imgMassivSlider} />
-        <Slider imgMassivSlider={imgMassivSlider} />
-        <Slider imgMassivSlider={imgMassivSlider} />
-        <Slider imgMassivSlider={imgMassivSlider} />
-        <Ionic name='ios-home'/>
         <Text>fdsfsdf</Text>
+        {/* <HomeSVG/> */}
       </ScrollView>
     </View>
   )
