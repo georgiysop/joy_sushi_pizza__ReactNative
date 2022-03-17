@@ -12,6 +12,10 @@ import {
   Dimensions,
 } from 'react-native'
 
+const imgMassivSlider = [
+  require('../assets/popular/spaisi.jpg'),
+  require('../assets/popular/furo.jpeg'),
+]
 const WIDTH = Dimensions.get('window').width
 const HEIGHT = Dimensions.get('window').height
 

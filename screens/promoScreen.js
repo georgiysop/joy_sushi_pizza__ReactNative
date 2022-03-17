@@ -1,8 +1,7 @@
 import React from 'react'
 import AppLoading from 'expo-app-loading'
-import { useFonts, Roboto_300Light } from '@expo-google-fonts/roboto'
 
-import { Philosopher_400Regular } from '@expo-google-fonts/philosopher'
+import { useFonts,Philosopher_400Regular } from '@expo-google-fonts/philosopher'
 
 import {
   StyleSheet,
@@ -18,7 +17,6 @@ const HEIGHT = Dimensions.get('window').height
 
 const Promo = () => {
   let [fontsLoaded] = useFonts({
-    Roboto_300Light,
     Philosopher_400Regular,
   })
 

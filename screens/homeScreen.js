@@ -1,5 +1,6 @@
 import React from 'react'
 import Slider from '../components/Slider'
+import SearchComponent from '../components/Search'
 import Ionic from 'react-native-vector-icons/Ionicons'
 import HomeSVG from '../assets/navigatorSVG/homeSVG'
 
@@ -29,6 +30,7 @@ const Home = () => {
     <View style={styles.container}>
       <ScrollView>
         <Slider imgMassivSlider={imgMassivSlider} />
+        <SearchComponent />
         <Text>fdsfsdf</Text>
         {/* <HomeSVG/> */}
       </ScrollView>
