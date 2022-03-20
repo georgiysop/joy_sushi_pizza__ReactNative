@@ -8,6 +8,15 @@ const SearchComponent = () => {
       <TextInput
         placeholder="Search"
         placeholderTextColor={'black'}
+        style={{
+          fontSize: 20,
+          borderWidth: 1,
+          margin: 10,
+          borderRadius: 20,
+          borderColor: 'red',
+          width: 45,
+          height: 40,
+        }}
       ></TextInput>
     </View>
   )

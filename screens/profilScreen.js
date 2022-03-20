@@ -1,4 +1,5 @@
 import React from 'react'
+import CustomButton1 from '../components/CustomButton'
 import {
   SafeAreaView,
   StyleSheet,
@@ -17,7 +18,13 @@ import {
 } from 'react-native'
 
 const Profil = () => {
-  return <View style={styles.container}></View>
+  return (
+    <View style={styles.container}>
+      <CustomButton1 title="Перейти к заказам" />
+      <CustomButton1 title="Перейти к заказам" />
+      <CustomButton1 title="Перейти к заказам" />
+    </View>
+  )
 }
 
 const styles = StyleSheet.create({
