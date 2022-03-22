@@ -3,6 +3,7 @@ import Icon from 'react-native-vector-icons/Ionicons'
 import SimpleIcon from 'react-native-vector-icons/SimpleLineIcons'
 import EvilIcons from 'react-native-vector-icons/EvilIcons'
 import Feather from 'react-native-vector-icons/Feather'
+import { List } from 'react-native-paper'
 import {
   useFonts,
   Philosopher_400Regular,
@@ -39,19 +40,50 @@ const Info = () => {
   } else {
     return (
       <View style={styles.center}>
-        <View style={styles.viewLine}>
+        <List.AccordionGroup>
+          <List.Accordion title="о нас" id="1">
+            <List.Item
+              title={
+                <View>
+                  <Text>
+                    JOY-это еда , которая приносит радость! Насладиться
+                    прекрасно приготовленными наисвежайшими роллами, аппетитной
+                    пиццей и другими блюдами
+                  </Text>
+                  <Text>ПОЧЕМУ ИМЕННО МЫ?</Text>
+                  <Text>-Доставка еды существенно экономит ваше время</Text>
+                  <Text>-в наших роллах всегда свежая рыбка</Text>
+                  <Text>
+                    -все блюда готовятся непосредственно после получения заказа
+                  </Text>
+                  <Text>-курьер доставит вам пиццу еще с дымком</Text>
+                </View>
+              }
+            />
+          </List.Accordion>
+          <List.Accordion title="условия доставки" id="2">
+            <List.Item />
+          </List.Accordion>
+          <View>
+            <List.Accordion title="контакты" id="3">
+              <List.Item title="Item 3" />
+            </List.Accordion>
+          </View>
+        </List.AccordionGroup>
+
+        {/* <View style={styles.viewLine}>
           <Text style={styles.textLine}>о нас</Text>
           <Icon name="chevron-down-outline" size={18}></Icon>
         </View>
         <View style={styles.viewLine}>
           <Text style={styles.textLine}>условия доставки</Text>
-          <Text style={styles.textLine}>условия доставки</Text>
           <Icon name="chevron-down-outline" size={18}></Icon>
         </View>
         <View style={styles.viewLine}>
           <Text style={styles.textLine}>контакты</Text>
+
           <Icon name="chevron-down-outline" size={18} />
-        </View>
+        </View> */}
         <View style={styles.viewButtonImage}>
           <SimpleIcon
             name="social-vkontakte"
@@ -84,18 +116,16 @@ const Info = () => {
 // borderWidth: 5,
 
 const styles = StyleSheet.create({
-  center: {
-    flex: 1,
-    alignItems: 'center',
-  },
+  center: {},
 
   viewLine: {
-    borderWidth: 2,
-    // borderBottomWidth:2,
-
+    // borderWidth: 2,
+    borderBottomWidth: 2,
     borderColor: '#DDD1D1',
     marginTop: HEIGHT * 0.04,
     width: WIDTH * 0.9,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
   },
   textLine: {
     fontSize: 18,

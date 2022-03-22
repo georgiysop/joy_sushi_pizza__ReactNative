@@ -20,6 +20,7 @@ const WIDTH = Dimensions.get('window').width
 const HEIGHT = Dimensions.get('window').height
 
 export default class Slider extends React.Component {
+  
   state = {
     active: 0,
   }
@@ -49,7 +50,7 @@ export default class Slider extends React.Component {
             style={styles.scroll}
           >
             {this.props.imgMassivSlider.map((image, index) => (
-              <Image source={image} style={styles.wrap} />
+              <Image key={index} source={image} style={styles.wrap} />
             ))}
           </ScrollView>
 
