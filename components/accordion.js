@@ -40,15 +40,15 @@ const Info = () => {
   } else {
     return (
       <View style={styles.center}>
-        {/* <List.AccordionGroup>
+        <List.AccordionGroup>
           <List.Accordion title="о нас" id="1">
             <List.Item
               title={
                 <View>
                   <Text>
-                    JOY-это еда , которая приносит радость! Насладиться
+                    {`JOY-это еда , которая приносит радость! Насладиться
                     прекрасно приготовленными наисвежайшими роллами, аппетитной
-                    пиццей и другими блюдами
+                    пиццей и другими блюдами1`}
                   </Text>
                   <Text>ПОЧЕМУ ИМЕННО МЫ?</Text>
                   <Text>-Доставка еды существенно экономит ваше время</Text>
@@ -69,7 +69,7 @@ const Info = () => {
               <List.Item title="Item 3" />
             </List.Accordion>
           </View>
-        </List.AccordionGroup> */}
+        </List.AccordionGroup>
 
         {/* <View style={styles.viewLine}>
           <Text style={styles.textLine}>о нас</Text>

@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import Slider from '../components/Slider'
 import SearchComponent from '../components/Search'
 import Ionic from 'react-native-vector-icons/Ionicons'
+import axios from 'axios'
 
 import {
   SafeAreaView,
@@ -26,7 +27,7 @@ const imgMassivSlider = [
 ]
 
 const Home = () => {
-  const [data, setData] = useState([])
+  // const [data, setData] = useState([])
 
   const getdata = async () => {
     //  try {
@@ -38,25 +39,29 @@ const Home = () => {
     //   }
     // }
 
-    let formdata = new FormData()
-    formdata.append(
-      'secret',
-      'NNsKDNkzsEFy64BYHyyEZt2nS9BKFF7fenSG366fAADtr5b2kzs9SdkzbQ7Hf4RndzY6sRaRbE8tyaeHAAGdDYBFAzdGnYYteFkzhnbkTaFdaNNAahED568srb2FZH24dankrrB8s7bsGQSG2h9Sb88saZZZtKQzN4K4fa3B74SEFzasFa8G8638SNYakzA2n8Qz9EZ6tDz33zeyzd5y9StRtbRFBbsRa7aaA26SrsGdQNAaSrzR8SyrYa'
-    )
+    let FormData = require('form-data')
+    let data = new FormData()
+    data.append('owner_id', '-203680384')
+    data.append('count', '1')
 
-    let requestOptions = {
-      method: 'POST',
-      body: formdata,
-      redirect: 'follow',
-    }
-
-    fetch('https://app.frontpad.ru/api/index.php?get_products', requestOptions)
-      .then((response) => response.json())
-      .then((result) => {
-        console.log(result)
-        setData(result)
+    axios
+      .post('https://api.vk.com/method/market.get', data, {
+        params: {
+          owner_id: '-203680384',
+          v: 5.124,
+          access_token:
+            'ba5fb524da1ef5f1f6a034709e3a19872f378e9c1c3351fea137375b073d3f85eeb313f2bd0f1fade2471',
+        },
+        //header
       })
-      .catch((error) => console.log('error', error))
+      .then(function(response) {
+        console.log(JSON.stringify(response.data))
+      })
+      .catch(function(error) {
+        console.log(error)
+      })
+
+    // console.log(res)
   }
 
   useEffect(() => {
@@ -69,7 +74,7 @@ const Home = () => {
         <Slider imgMassivSlider={imgMassivSlider} />
         <SearchComponent />
 
-        <FlatList
+        {/* <FlatList
           data={data}
           keyExtractor={({ id }, index) => id}
           renderItem={({ item }) => (
@@ -77,7 +82,7 @@ const Home = () => {
               {item.title}, {item.releaseYear}
             </Text>
           )}
-        />
+        /> */}
       </ScrollView>
     </View>
   )

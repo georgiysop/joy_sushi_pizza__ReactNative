@@ -20,7 +20,6 @@ const WIDTH = Dimensions.get('window').width
 const HEIGHT = Dimensions.get('window').height
 
 export default class Slider extends React.Component {
-  
   state = {
     active: 0,
   }

@@ -84,7 +84,7 @@ export default class Info extends React.Component {
             <Text style={styles.textLine}>о нас</Text>
             <Icon
               name="chevron-down-outline"
-              size={18}
+              size={24}
               onPress={this.ShowHideTextComponentView_1}
             ></Icon>
           </View>
@@ -98,7 +98,7 @@ export default class Info extends React.Component {
                 }}
               >
                 <Text>{`JOY-это еда , которая приносит радость! Насладиться прекрасно приготовленными наисвежайшими роллами, аппетитной пиццей и другими блюдами.\n\n`}</Text>
-                <Text>{`ПОЧЕМУ ИМЕННО МЫ?,\n\n- доставка еды существенно экономит ваше время\n- в наших роллах всегда свежая рыбка\n- курьер доставит вам пиццу еще с дымком\n- все готовятся непосредственно после получения заказа`}</Text>
+                <Text>{`ПОЧЕМУ ИМЕННО МЫ ?\n\n- доставка еды существенно экономит ваше время\n- в наших роллах всегда свежая рыбка\n- курьер доставит вам пиццу еще с дымком\n- все готовятся непосредственно после получения заказа`}</Text>
               </Text>
             </View>
           ) : null}
@@ -107,7 +107,7 @@ export default class Info extends React.Component {
             <Text style={styles.textLine}>стоимость доставки</Text>
             <Icon
               name="chevron-down-outline"
-              size={18}
+              size={24}
               onPress={this.ShowHideTextComponentView_2}
             ></Icon>
           </View>
@@ -153,7 +153,7 @@ export default class Info extends React.Component {
             <Text style={styles.textLine}>контакты</Text>
             <Icon
               name="chevron-down-outline"
-              size={18}
+              size={24}
               onPress={this.ShowHideTextComponentView_3}
             />
           </View>
@@ -165,9 +165,7 @@ export default class Info extends React.Component {
                   color: '#000',
                   fontFamily: 'Philosopher_400Regular',
                 }}
-              >
-                <Text>{`\nг.Заринск ул.Металлургов 3/2\n\n`}</Text>
-                <Text>{`8-963-535-4144`}</Text>
+              ><Text>{`г.Заринск ул.Металлургов 3/2\n\n8-963-535-4144`}</Text>
               </Text>
             </View>
           ) : null}
@@ -229,5 +227,6 @@ const styles = StyleSheet.create({
   },
   textList: {
     margin: 20,
+    textAlign:'left'
   },
 })
