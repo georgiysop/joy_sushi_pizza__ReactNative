@@ -1,5 +1,5 @@
 import { React } from 'react'
-import { StyleSheet, View, Text, Image, Dimensions } from 'react-native'
+import { StyleSheet, View, Text, Image, Dimensions, Button } from 'react-native'
 import CustomButton1 from '../components/CustomButton'
 import Ionicons from 'react-native-vector-icons/Ionicons'
 import AppLoading from 'expo-app-loading'
@@ -12,7 +12,13 @@ import {
 const WIDTH = Dimensions.get('window').width
 const HEIGHT = Dimensions.get('window').height
 
-const Basket = () => {
+const Basket = ({navigation}) => {
+
+  const loadScreenHome = () => {
+    navigation.navigate('homeScreen')
+  }
+
+  
   let [fontsLoaded] = useFonts({
     Philosopher_400Regular,
     Philosopher_700Bold,
@@ -32,7 +38,8 @@ const Basket = () => {
         <Text style={styles.basketclear2}>
           Добавьте понравившийся товар из меню.
         </Text>
-        <CustomButton1 title="Перейти к заказам" />
+        <Button title="Перейти к заказам" onPress={loadScreenHome} />
+        <CustomButton1 title="Перейти к заказам" onPress={loadScreenHome}/>
       </View>
     )
   }

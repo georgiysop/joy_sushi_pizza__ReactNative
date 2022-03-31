@@ -40,7 +40,7 @@ export default class Slider extends React.Component {
         <StatusBar
           barStyle={Platform.OS === 'ios' ? 'dark-content' : 'light-content'}
         />
-        <View>
+        <View style={styles.sliderP}>
           <ScrollView
             horizontal
             pagingEnabled
