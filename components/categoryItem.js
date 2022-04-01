@@ -19,7 +19,7 @@ export default function CategoryItem({ name, imgu, index }) {
 const styles = StyleSheet.create({
   container: {
     marginBottom: 15,
-    width: 79,
+    width: 85,
     height: 100,
     borderRadius: 50,
 

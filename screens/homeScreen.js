@@ -45,6 +45,38 @@ const Home = () => {
       name: 'Закуски',
       imgu: require('../assets/category/snack.png'),
     },
+    {
+      name: 'Street Food',
+      imgu: require('../assets/category/kebab.png'),
+    },
+    {
+      name: 'Супы',
+      imgu: require('../assets/category/soup.png'),
+    },
+    {
+      name: 'Гунканы',
+      imgu: require('../assets/category/gunkan.png'),
+    },
+    {
+      name: 'Роллы',
+      imgu: require('../assets/category/sushi.png'),
+    },
+    {
+      name: 'Салаты',
+      imgu: require('../assets/category/salad.png'),
+    },
+    {
+      name: 'Десерты',
+      imgu: require('../assets/category/desert.png'),
+    },
+    {
+      name: 'Напитки',
+      imgu: require('../assets/category/drink.png'),
+    },
+    {
+      name: 'Добавки',
+      imgu: require('../assets/category/sauce.png'),
+    },
   ]
 
   // const [data, setData] = useState([])
@@ -91,7 +123,7 @@ const Home = () => {
   return (
     <View style={styles.container}>
       <ScrollView>
-        {/* <Slider imgMassivSlider={imgMassivSlider} /> */}
+        <Slider imgMassivSlider={imgMassivSlider} />
         <SearchComponent />
 
         <FlatList
