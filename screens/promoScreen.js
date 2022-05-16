@@ -1,7 +1,10 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import AppLoading from 'expo-app-loading'
-
-import { useFonts,Philosopher_400Regular } from '@expo-google-fonts/philosopher'
+import { auth, db } from '../firebase'
+import {
+  useFonts,
+  Philosopher_400Regular,
+} from '@expo-google-fonts/philosopher'
 
 import {
   StyleSheet,
@@ -10,70 +13,66 @@ import {
   Text,
   Image,
   Dimensions,
+  ActivityIndicator,
+  FlatList,
 } from 'react-native'
 
 const WIDTH = Dimensions.get('window').width
 const HEIGHT = Dimensions.get('window').height
 
 const Promo = () => {
-  let [fontsLoaded] = useFonts({
-    Philosopher_400Regular,
-  })
+  const [loading, setLoading] = useState(true) // Set loading to true on component mount
+  const [promo, setPromo] = useState([]) // Initial empty array of users
 
-  if (!fontsLoaded) {
-    return <AppLoading />
-  } else {
-    return (
-      <ScrollView>
-        <View style={styles.center}>
-          <View style={styles.viewStyte}>
-            <Image
-              source={require('../assets/promo/1.png')}
-              style={styles.imageStyle2}
-            />
-            <Text style={styles.textStyle}>
-              С понедельника по пятницу на роллы с 13:00 - 16:00 СКИДКА 15%
-              <Text style={styles.textBold}> (сеты в акцию не входят)</Text>
-            </Text>
-          </View>
-          <View style={styles.viewStyte}>
-            <Image
-              source={require('../assets/promo/2.png')}
-              style={styles.imageStyle}
-            />
-            <Text style={styles.textStyle}>
-              Скидка Именинника 15% на любой ваш заказ. Действует 3 дня до и 3
-              дня после{' '}
-              <Text style={styles.textBold}>
-                ( не суммируется с другими скидками, акциями, подарками и
-                другими спец. предложениями )
-              </Text>
-            </Text>
-          </View>
-          <View style={styles.viewStyte}>
-            <Image
-              source={require('../assets/promo/3.png')}
-              style={styles.imageStyle}
-            />
-            <Text style={styles.textStyle}>
-              При заказе 2-ух пицц , пицца Маргарита 33 см в подарок{' '}
-              <Text style={styles.textBold}>
-                ( распространяется на все пиццы кроме пицц 25см и акционного
-                товара )
-              </Text>
-            </Text>
-          </View>
-          <View style={styles.viewStyte}>
-            <Image
-              source={require('../assets/promo/4.png')}
-              style={styles.imageStyle}
-            />
-            <Text style={styles.textStyle}>Скидка 5% при самовывозе</Text>
-          </View>
-        </View>
-      </ScrollView>
-    )
+  useEffect(() => {
+    const subscriber = db.collection('Акции').onSnapshot((querySnapshot) => {
+      const promo = []
+
+      querySnapshot.forEach((documentSnapshot) => {
+        promo.push({
+          ...documentSnapshot.data(),
+          key: documentSnapshot.id,
+        })
+      })
+
+      setPromo(promo)
+      setLoading(false)
+    })
+
+    // Unsubscribe from events when no longer in use
+    return () => subscriber()
+  }, [])
+
+  if (loading) {
+    return <View style={{justifyContent:'center',  flex: 1,}}><ActivityIndicator/></View>
   }
+
+  // let [fontsLoaded] = useFonts({
+  //   Philosopher_400Regular,
+  // })
+
+  // if (!fontsLoaded) {
+  //   return <AppLoading />
+  // } else {
+  return (
+    <View>
+      <FlatList
+        data={promo}
+        renderItem={({ item }) => (
+          <View style={styles.center}>
+            <View style={styles.viewStyte}>
+              <Image
+                source={{ uri: item.image !== '' ? item.image : undefined }}
+                style={styles.imageStyle}
+              />
+              <Text style={styles.textStyle}>{item.description}</Text>
+            </View>
+          </View>
+        )}
+      />
+    </View>
+  )
+  // }
 }
 const styles = StyleSheet.create({
   center: {
@@ -87,12 +86,6 @@ const styles = StyleSheet.create({
     width: WIDTH,
     height: HEIGHT * 0.25,
   },
-  imageStyle2: {
-    resizeMode: 'stretch',
-    width: WIDTH,
-    height: HEIGHT * 0.2,
-  },
-  viewStyte: {},
   textStyle: {
     textAlign: 'center',
     fontFamily: 'Philosopher_400Regular',
@@ -101,12 +94,7 @@ const styles = StyleSheet.create({
     paddingLeft: 8,
     paddingRight: 8,
     fontSize: 16,
-    borderBottomColor:'red',
-    
-    
-  },
-  textBold: {
-    fontWeight: 'bold',
+    borderBottomColor: 'red',
   },
 })
 

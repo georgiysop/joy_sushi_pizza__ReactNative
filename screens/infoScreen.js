@@ -165,7 +165,8 @@ export default class Info extends React.Component {
                   color: '#000',
                   fontFamily: 'Philosopher_400Regular',
                 }}
-              ><Text>{`г.Заринск ул.Металлургов 3/2\n\n8-963-535-4144`}</Text>
+              >
+                <Text>{`г.Заринск ул.Металлургов 3/2\n\n8-963-535-4144`}</Text>
               </Text>
             </View>
           ) : null}
@@ -227,6 +228,6 @@ const styles = StyleSheet.create({
   },
   textList: {
     margin: 20,
-    textAlign:'left'
+    textAlign: 'left',
   },
 })

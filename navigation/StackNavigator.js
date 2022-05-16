@@ -1,25 +1,23 @@
-import React from 'react'
-import { createStackTabNavigator } from '@react-navigation/bottom-tabs'
-import Ionicons from 'react-native-vector-icons/Ionicons'
+import React, { useState, Component } from 'react'
+import { createStackNavigator } from '@react-navigation/stack'
+import BottomTabNavigator from './TabNavigator'
 
-import Home from '../screens/homeScreen'
-import Promo from '../screens/promoScreen'
-import Profile from '../screens/profilScreen'
-import Info from '../screens/infoScreen'
-import Basket from '../screens/basketScreen'
-
+import Login from '../screens/loginScreen'
+// import all from  '../screens/allScreen'
 
 const Stack = createStackNavigator()
 
-const BottomStackbNavigator = () => {
+const BottomStackNavigator = () => {
   return (
     <Stack.Navigator>
-      <Stack.Screen name="Акции" component={Promo} />
-      <Stack.Screen name="Профиль" component={Profile} />
-      <Stack.Screen name="Инфо" component={Info} />
-      <Stack.Screen name="Корзина" component={Basket} />
-   </Stack.Navigator>
+      <Stack.Screen name="Login" component={Login} options={{ headerShown: false }} />
+      <Stack.Screen
+        name="all"
+        children={BottomTabNavigator}
+        options={{ headerShown: false }}
+      />
+    </Stack.Navigator>
   )
 }
 
-export default BottomStackbNavigator
+export default BottomStackNavigator

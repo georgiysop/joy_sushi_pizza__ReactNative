@@ -1,5 +1,6 @@
 import { View, Text, StyleSheet, Image, TouchableOpacity } from 'react-native'
-
+import React, { useState, useEffect } from 'react'
+import { auth, db } from '../firebase'
 export default function CategoryItem({
   name,
   imgu,
@@ -7,6 +8,7 @@ export default function CategoryItem({
   active,
   handlePress,
 }) {
+
   return (
     <TouchableOpacity onPress={handlePress}>
       <View
@@ -63,5 +65,6 @@ const styles = StyleSheet.create({
   },
   header: {
     fontWeight: 'bold',
+    textAlign: 'center',
   },
 })

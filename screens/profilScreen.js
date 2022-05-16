@@ -1,38 +1,141 @@
-import React from 'react'
-import CustomButton1 from '../components/CustomButton'
+import { useNavigation } from '@react-navigation/core'
+import React, { useReducer } from 'react'
+import { ButtonGoogle } from '../components/CustomButton'
 import {
-  SafeAreaView,
   StyleSheet,
-  StatusBar,
-  Platform,
-  ScrollView,
   View,
   Text,
-  BackHandler,
-  Button,
-  Alert,
-  Image,
-  Dimensions,
-  AppRegistry,
   TouchableOpacity,
+  TextInput,
+  ScrollView,
 } from 'react-native'
+import { auth, db } from '../firebase'
 
 const Profil = () => {
+  const navigation = useNavigation()
+
+  const handleSingOut = () => {
+    auth
+      .signOut()
+      .then(() => {
+        navigation.replace('Login')
+      })
+      .catch((error) => alert(error.message))
+  }
+
+  // const handleSave = () => {
+  //   auth
+  //     .signOut()
+  //     .then(() => {
+  //       navigation.replace('Login')
+  //     })
+  //     .catch((error) => alert(error.message))
+  // }
+
   return (
-    <View style={styles.container}>
-      <CustomButton1 title="Перейти к заказам" />
-      <CustomButton1 title="Перейти к заказам" />
-      <CustomButton1 title="Перейти к заказам" />
-    </View>
+    <ScrollView>
+      <View style={styles.container}>
+        <View style={styles.form}>
+          <TextInput
+            placeholder="email"
+            placeholderTextColor={'red'}
+            value={auth.currentUser?.email}
+            style={styles.input}
+          />
+          <TextInput
+            placeholder="Имя"
+            placeholderTextColor={'red'}
+            style={styles.input}
+          />
+          <TextInput
+            placeholder="Телефон"
+            placeholderTextColor={'red'}
+            style={styles.input}
+          />
+          <TextInput
+            placeholder="Улица"
+            placeholderTextColor={'red'}
+            style={styles.input}
+          />
+          <View
+            style={{
+              flexDirection: 'row',
+              width: '32%',
+              justifyContent: 'center',
+            }}
+          >
+            <TextInput
+              placeholder="дом"
+              placeholderTextColor={'red'}
+              style={styles.input}
+            />
+            <TextInput
+              placeholder="подъезд"
+              placeholderTextColor={'red'}
+              style={styles.input}
+            />
+            <TextInput
+              placeholder="кв"
+              placeholderTextColor={'red'}
+              style={styles.input}
+            />
+          </View>
+        </View>
+        <View style={styles.save}>
+          <TouchableOpacity style={styles.button}>
+            <Text style={styles.buttonText}>сохранить</Text>
+          </TouchableOpacity>
+          {/* <TouchableOpacity style={styles.button}>
+            <Text style={styles.buttonText}>Мои заказы</Text>
+          </TouchableOpacity> */}
+        </View>
+
+        <View style={{ width: '85%', alignItems: 'center', marginTop: 20 }}>
+          <Text>Аккаунт: {auth.currentUser?.email}</Text>
+          <TouchableOpacity style={styles.button} onPress={handleSingOut}>
+            <Text style={styles.buttonText}>Выйти из аккаунта</Text>
+          </TouchableOpacity>
+        </View>
+      </View>
+    </ScrollView>
   )
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
+    width: '100%',
     alignItems: 'center',
-    textAlign: 'center',
+    justifyContent: 'center',
+  },
+  form: { width: '85%', alignItems: 'center', marginTop: 50 },
+  button: {
+    backgroundColor: 'red',
+    width: '100%',
+    padding: 10,
+    borderRadius: 10,
+    alignItems: 'center',
+    width: '50%',
+  },
+  save: {
+    alignItems: 'center',
+    width: '80%',
+    marginTop: 20,
+  },
+
+  buttonText: { color: '#fff', fontWeight: '700', fontSize: 16 },
+  input: {
+    backgroundColor: '#FFF0F5',
+    paddingHorizontal: 15,
+    paddingVertical: 10,
+    borderWidth: 1,
+    borderRadius: 10,
+    marginTop: 10,
+    marginLeft: 6,
+    color: 'red',
+    fontSize: 16,
+    opacity: 0.4,
+    width: '90%',
   },
 })
 

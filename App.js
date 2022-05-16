@@ -1,26 +1,8 @@
 import React, { useState, Component } from 'react'
-import { StatusBar as ExpoStatusBar } from 'expo-status-bar'
 import { NavigationContainer } from '@react-navigation/native'
+import BottomStackNavigator from './navigation/StackNavigator'
 import BottomTabNavigator from './navigation/TabNavigator'
-
-import {
-  SafeAreaView,
-  StyleSheet,
-  StatusBar,
-  Platform,
-  ScrollView,
-  View,
-  Text,
-  BackHandler,
-  Button,
-  Alert,
-  Image,
-  Dimensions,
-  AppRegistry,
-} from 'react-native'
-
-const WIDTH = Dimensions.get('window').width
-const HEIGHT = Dimensions.get('window').height
+import { SafeAreaView, StyleSheet, StatusBar, Platform } from 'react-native'
 
 export default class App extends React.Component {
   render() {
@@ -30,7 +12,8 @@ export default class App extends React.Component {
           barStyle={Platform.OS === 'ios' ? 'dark-content' : 'light-content'}
         />
         <NavigationContainer>
-          <BottomTabNavigator />
+          {/* <BottomTabNavigator /> */}
+          <BottomStackNavigator />
         </NavigationContainer>
       </SafeAreaView>
     )

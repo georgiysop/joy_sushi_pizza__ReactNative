@@ -1,24 +1,32 @@
 import { React } from 'react'
-import { View, Text, TouchableOpacity, StyleSheet } from 'react-native'
+import { View, Text, TouchableOpacity, StyleSheet, Image } from 'react-native'
 
-const CustomButton1 = (props) => {
+const ButtonGoogle = () => {
   return (
     <>
       <View style={styles.container}>
-        <TouchableOpacity style={styles.btnstyle1}>
-          <Text style={styles.btntext1}>{props.title}</Text>
+        <TouchableOpacity style={styles.btnstyle2}>
+          <Text style={styles.btntext2}>авторизироваться через </Text>
+          <Image
+            source={require('../assets/authorization/google.png')}
+            style={styles.image}
+          />
         </TouchableOpacity>
       </View>
     </>
   )
 }
 
-const CustomButton2 = (props) => {
+const ButtonFacebook = () => {
   return (
     <>
       <View style={styles.container}>
         <TouchableOpacity style={styles.btnstyle2}>
-          <Text style={styles.btntext2}>{props.title}</Text>
+          <Text style={styles.btntext2}>авторизироваться через</Text>
+          <Image
+            source={require('../assets/authorization/facebook.png')}
+            style={styles.image}
+          />
         </TouchableOpacity>
       </View>
     </>
@@ -27,35 +35,42 @@ const CustomButton2 = (props) => {
 
 const styles = StyleSheet.create({
   container: {
-    padding: 15,
+    padding: 10,
   },
   btnstyle1: {
+    margin: 30,
     backgroundColor: '#FF0000',
     borderRadius: 20,
-    padding: 14,
+    padding: 12,
     justifyContent: 'center',
     alignItems: 'center',
-    width: 278,
-    fontSize: 15,
-    fontWeight: '700',
+    width: 250,
   },
 
   btntext1: {
     color: '#fff',
-  },
-  btnstyle2: {
-    backgroundColor: '#FF0000',
-    borderRadius: 20,
-    padding: 14,
-    justifyContent: 'center',
-    alignItems: 'center',
-    width: 278,
     fontSize: 15,
     fontWeight: '700',
   },
+  btnstyle2: {
+    flexDirection: 'row',
+    backgroundColor: '#fff',
+    borderRadius: 10,
+    borderWidth: 1,
+    borderColor: '#FF0000',
+    padding: 8,
+    justifyContent: 'center',
+    alignItems: 'center',
+    width: 250,
+  },
   btntext2: {
-    color: '#fff',
+    color: '#FF0000',
+    fontSize: 15,
+  },
+  image: {
+    width: 20,
+    height: 20,
   },
 })
 
-export default CustomButton1
+export { ButtonGoogle, ButtonFacebook }
