@@ -3,7 +3,8 @@ import { NavigationContainer } from '@react-navigation/native'
 import BottomStackNavigator from './navigation/StackNavigator'
 import BottomTabNavigator from './navigation/TabNavigator'
 import { SafeAreaView, StyleSheet, StatusBar, Platform } from 'react-native'
-
+import { Provider } from 'react-redux'
+import store from './redux/store'
 export default class App extends React.Component {
   render() {
     return (
@@ -13,7 +14,9 @@ export default class App extends React.Component {
         />
         <NavigationContainer>
           {/* <BottomTabNavigator /> */}
-          <BottomStackNavigator />
+          <Provider store={store}>
+            <BottomStackNavigator />
+          </Provider>
         </NavigationContainer>
       </SafeAreaView>
     )

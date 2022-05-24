@@ -8,13 +8,12 @@ export default function CategoryItem({
   active,
   handlePress,
 }) {
-
   return (
     <TouchableOpacity onPress={handlePress}>
       <View
         style={[
           styles.container,
-          index === 0 ? { marginLeft: 20 } : { marginLeft: 15 },
+          index === 0 ? { marginLeft: 10 } : { marginLeft: 10 },
           active
             ? { backgroundColor: 'rgb(241,186,87)' }
             : { backgroundColor: 'white' },
@@ -32,7 +31,7 @@ export default function CategoryItem({
 const styles = StyleSheet.create({
   container: {
     marginBottom: 15,
-    width: 85,
+    width: 87,
     height: 100,
     borderRadius: 50,
 

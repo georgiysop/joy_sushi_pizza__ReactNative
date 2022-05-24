@@ -2,18 +2,14 @@ import React, { useEffect, useState } from 'react'
 import Slider from '../components/Slider'
 import SearchComponent from '../components/Search'
 import CategoryItem from '../components/categoryItem'
-// import Fetch from '../components/fetch'
-
-import Ionic from 'react-native-vector-icons/Ionicons'
-import axios from 'axios'
 import FormProducts from '../components/FormProducts'
 
+import { ScrollView } from 'react-native-virtualized-view'
 import {
   SafeAreaView,
   StyleSheet,
   StatusBar,
   Platform,
-  ScrollView,
   View,
   Text,
   BackHandler,
@@ -22,8 +18,9 @@ import {
   Image,
   Dimensions,
   AppRegistry,
+  VirtualizedScrollView,
   FlatList,
-  SegmentedControlIOSComponent,
+  // ScrollView,
 } from 'react-native'
 
 const imgMassivSlider = [
@@ -32,19 +29,19 @@ const imgMassivSlider = [
 ]
 
 const Home = () => {
-  const [term, setTerm] = useState('Пицца')
+  const [term, setTerm] = useState('Пицца25')
 
   const commonCategories = [
     {
-      name: 'Пицца 25 см',
+      name: 'Пицца25',
       imgu: require('../assets/category/pizza_25.png'),
     },
     {
-      name: 'Пицца 33 см',
+      name: 'Пицца33',
       imgu: require('../assets/category/pizza_33.png'),
     },
     {
-      name: 'Пицца 40 см',
+      name: 'Пицца40',
       imgu: require('../assets/category/pizza_40.png'),
     },
     {
@@ -52,7 +49,7 @@ const Home = () => {
       imgu: require('../assets/category/sets.png'),
     },
     {
-      name: 'Wok',
+      name: 'WOK',
       imgu: require('../assets/category/wok.png'),
     },
     {
@@ -96,8 +93,9 @@ const Home = () => {
   return (
     <View style={styles.container}>
       <ScrollView>
-        <Slider imgMassivSlider={imgMassivSlider} />
-        <SearchComponent setTerm={setTerm} />
+        {/* <Slider imgMassivSlider={imgMassivSlider} />
+        <SearchComponent setTerm={setTerm} /> */}
+
         <FlatList
           data={commonCategories}
           renderItem={({ item, index }) => {
@@ -116,8 +114,7 @@ const Home = () => {
           keyExtractor={(category) => category.name}
         />
 
-        <FormProducts />
-        {/* <Fetch /> */}
+        <FormProducts product={term} />
       </ScrollView>
     </View>
   )

@@ -16,6 +16,7 @@ import {
   ActivityIndicator,
   FlatList,
 } from 'react-native'
+import { TouchableOpacity } from 'react-native-gesture-handler'
 
 const WIDTH = Dimensions.get('window').width
 const HEIGHT = Dimensions.get('window').height
@@ -44,7 +45,11 @@ const Promo = () => {
   }, [])
 
   if (loading) {
-    return <View style={{justifyContent:'center',  flex: 1,}}><ActivityIndicator/></View>
+    return (
+      <View style={{ justifyContent: 'center', flex: 1 }}>
+        <ActivityIndicator />
+      </View>
+    )
   }
 
   // let [fontsLoaded] = useFonts({
@@ -61,11 +66,15 @@ const Promo = () => {
         renderItem={({ item }) => (
           <View style={styles.center}>
             <View style={styles.viewStyte}>
-              <Image
-                source={{ uri: item.image !== '' ? item.image : undefined }}
-                style={styles.imageStyle}
-              />
-              <Text style={styles.textStyle}>{item.description}</Text>
+              <View style={styles.imageStyle}>
+                <Image
+                  source={{ uri: item.image !== '' ? item.image : undefined }}
+                  style={styles.imageStyle}
+                />
+              </View>
+              <View style={styles.padd}>
+                <Text style={styles.textStyle}>{item.description}</Text>
+              </View>
             </View>
           </View>
         )}
@@ -82,19 +91,37 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
   imageStyle: {
+    borderRadius: 10,
     resizeMode: 'stretch',
-    width: WIDTH,
-    height: HEIGHT * 0.25,
+    width: '100%',
+    // width: WIDTH,
+    height: HEIGHT * 0.23,
   },
   textStyle: {
     textAlign: 'center',
     fontFamily: 'Philosopher_400Regular',
-    marginTop: 15,
-    marginBottom: 15,
+
     paddingLeft: 8,
     paddingRight: 8,
     fontSize: 16,
     borderBottomColor: 'red',
+  },
+  viewStyte: {
+    marginTop: 10,
+    marginBottom: 20,
+    width: '90%',
+
+    backgroundColor: '#fff',
+
+    borderRadius: 10,
+    shadowColor: 'black',
+    shadowOffset: { width: 10, height: 10 },
+    elevation: 3,
+    shadowOpacity: 0.3,
+    padding: 10,
+  },
+  padd: {
+    marginTop: 10,
   },
 })
 

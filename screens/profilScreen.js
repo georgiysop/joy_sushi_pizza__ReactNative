@@ -1,5 +1,6 @@
 import { useNavigation } from '@react-navigation/core'
-import React, { useReducer } from 'react'
+import React, { useReducer, useState, useEffect } from 'react'
+import { auth, db } from '../firebase'
 import { ButtonGoogle } from '../components/CustomButton'
 import {
   StyleSheet,
@@ -9,10 +10,26 @@ import {
   TextInput,
   ScrollView,
 } from 'react-native'
-import { auth, db } from '../firebase'
 
 const Profil = () => {
   const navigation = useNavigation()
+  const [userData, setUserData] = useState(null)
+
+  // const getUser = async () => {
+  //   const currentUser = await db
+  //     .collection('users')
+  //     .doc(user.uid)
+  //     .get()
+  //     .then((documentSnapshot) => {
+  //       if (documentSnapshot.exists) {
+  //         console.log('User Data', documentSnapshot.data())
+  //         setUserData(documentSnapshot.data())
+  //       }
+  //     }).catch((error) => alert(error.message) )
+  // }
+  // useEffect(() => {
+  //   getUser()
+  // }, [])
 
   const handleSingOut = () => {
     auth
@@ -32,6 +49,18 @@ const Profil = () => {
   //     .catch((error) => alert(error.message))
   // }
 
+  const save = () => {
+    db.collection('users')
+      .doc(currentUser.uid)
+      .update({
+        name: currentUser.name,
+        phone: currentUser.phone,
+        street: currentUser.street,
+        house: currentUser.house,
+        pod: currentUser.pod,
+        kv: currentUser.kv,
+      })
+  }
   return (
     <ScrollView>
       <View style={styles.container}>
@@ -82,7 +111,7 @@ const Profil = () => {
           </View>
         </View>
         <View style={styles.save}>
-          <TouchableOpacity style={styles.button}>
+          <TouchableOpacity style={styles.button} onPress={save}>
             <Text style={styles.buttonText}>сохранить</Text>
           </TouchableOpacity>
           {/* <TouchableOpacity style={styles.button}>
@@ -115,7 +144,7 @@ const styles = StyleSheet.create({
     padding: 10,
     borderRadius: 10,
     alignItems: 'center',
-    width: '50%',
+    width: '60%',
   },
   save: {
     alignItems: 'center',
