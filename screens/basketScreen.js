@@ -1,4 +1,3 @@
-import { useNavigation } from '@react-navigation/core'
 import React, { useState, useEffect } from 'react'
 import { increment, decrement, clear, removeItem } from '../redux/cartSlice'
 import { useDispatch, useSelector } from 'react-redux'

@@ -4,6 +4,7 @@ import BottomTabNavigator from './TabNavigator'
 
 import Login from '../screens/loginScreen'
 import Order from '../screens/orderScreen'
+import Conf from '../screens/confScreen'
 // import all from  '../screens/allScreen'
 
 const Stack = createStackNavigator()
@@ -24,7 +25,12 @@ const BottomStackNavigator = () => {
       <Stack.Screen
         name="Order"
         component={Order}
-        options={{ headerTitle:'О формление заказа',}}
+        options={{ headerTitle:'Оформление заказа',}}
+      />
+      <Stack.Screen
+        name="Conf"
+        component={Conf}
+        options={{ headerShown: false ,}}
       />
     </Stack.Navigator>
   )

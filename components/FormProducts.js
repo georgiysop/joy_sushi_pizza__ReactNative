@@ -24,6 +24,7 @@ const pol_width = WIDTH / 2 - 20
 // const [{data, loading, error}, searchProducts] =
 
 function FormProducts(props) {
+  
   const dispatch = useDispatch()
   const [product, setProduct] = useState([]) // Initial empty array of users
 
@@ -84,7 +85,12 @@ function FormProducts(props) {
               <View>
                 <Text style={styles.price}>{item.price} ₽</Text>
               </View>
-              <TouchableOpacity onPress={() => dispatch(addToCart(item))}>
+              <TouchableOpacity
+                onPress={() => {
+                  dispatch(addToCart(item))
+                  alert('Добавлено')
+                }}
+              >
                 <MaterialIcons
                   name="add-shopping-cart"
                   size={24}
@@ -120,7 +126,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
   },
   kartinka: {
-    resizeMode: 'contain',
+    resizeMode: 'stretch',
     borderTopLeftRadius: 10,
     borderTopRightRadius: 10,
 

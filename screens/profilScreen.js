@@ -15,21 +15,23 @@ const Profil = () => {
   const navigation = useNavigation()
   const [userData, setUserData] = useState(null)
 
-  // const getUser = async () => {
-  //   const currentUser = await db
-  //     .collection('users')
-  //     .doc(user.uid)
-  //     .get()
-  //     .then((documentSnapshot) => {
-  //       if (documentSnapshot.exists) {
-  //         console.log('User Data', documentSnapshot.data())
-  //         setUserData(documentSnapshot.data())
-  //       }
-  //     }).catch((error) => alert(error.message) )
-  // }
-  // useEffect(() => {
-  //   getUser()
-  // }, [])
+  const getUser = async () => {
+    const user = auth.currentUser
+    db.collection('users')
+      .doc(user.uid)
+      .get()
+      .then((documentSnapshot) => {
+        if (documentSnapshot.exists) {
+          console.log('User Data', documentSnapshot.data())
+          setUserData(documentSnapshot.data())
+        }
+      })
+      .catch((error) => alert(error.message))
+  }
+
+  useEffect(() => {
+    getUser()
+  }, [])
 
   const handleSingOut = () => {
     auth
@@ -50,15 +52,17 @@ const Profil = () => {
   // }
 
   const save = () => {
+    const user = auth.currentUser
     db.collection('users')
-      .doc(currentUser.uid)
+      .doc(user.uid)
       .update({
-        name: currentUser.name,
-        phone: currentUser.phone,
-        street: currentUser.street,
-        house: currentUser.house,
-        pod: currentUser.pod,
-        kv: currentUser.kv,
+        name: userData.name,
+        phone: userData.phone,
+        street: userData.street,
+        house: userData.house,
+        pod: userData.pod,
+        kv: userData.kv,
+        doc: user.uid,
       })
   }
   return (
@@ -68,22 +72,28 @@ const Profil = () => {
           <TextInput
             placeholder="email"
             placeholderTextColor={'red'}
-            value={auth.currentUser?.email}
+            value={userData ? userData.email : ''}
             style={styles.input}
           />
           <TextInput
             placeholder="Имя"
             placeholderTextColor={'red'}
+            value={userData ? userData.name : ''}
+            onChangeText={(txt) => setUserData({ ...userData, name: txt })}
             style={styles.input}
           />
           <TextInput
             placeholder="Телефон"
             placeholderTextColor={'red'}
+            value={userData ? userData.phone : ''}
+            onChangeText={(txt) => setUserData({ ...userData, phone: txt })}
             style={styles.input}
           />
           <TextInput
             placeholder="Улица"
             placeholderTextColor={'red'}
+            value={userData ? userData.street : ''}
+            onChangeText={(txt) => setUserData({ ...userData, street: txt })}
             style={styles.input}
           />
           <View
@@ -96,16 +106,22 @@ const Profil = () => {
             <TextInput
               placeholder="дом"
               placeholderTextColor={'red'}
+              value={userData ? userData.house : ''}
+              onChangeText={(txt) => setUserData({ ...userData, house: txt })}
               style={styles.input}
             />
             <TextInput
               placeholder="подъезд"
               placeholderTextColor={'red'}
+              value={userData ? userData.pod : ''}
+              onChangeText={(txt) => setUserData({ ...userData, pod: txt })}
               style={styles.input}
             />
             <TextInput
               placeholder="кв"
               placeholderTextColor={'red'}
+              value={userData ? userData.kv : ''}
+              onChangeText={(txt) => setUserData({ ...userData, kv: txt })}
               style={styles.input}
             />
           </View>

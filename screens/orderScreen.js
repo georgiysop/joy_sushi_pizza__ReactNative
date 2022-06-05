@@ -1,6 +1,8 @@
-import React, { useState } from 'react'
-import { useSelector } from 'react-redux'
+import React, { useState, useEffect } from 'react'
+import { db, auth } from '../firebase'
+import { useSelector, useDispatch } from 'react-redux'
 import { useNavigation } from '@react-navigation/core'
+const { createSelector } = require('@reduxjs/toolkit')
 import {
   StyleSheet,
   View,
@@ -17,17 +19,68 @@ import {
   Philosopher_400Regular,
   Philosopher_700Bold,
 } from '@expo-google-fonts/philosopher'
-import { ScrollView } from 'react-native-gesture-handler'
+import { ScrollView, TouchableOpacity } from 'react-native-gesture-handler'
 
 const WIDTH = Dimensions.get('window').width
 const HEIGHT = Dimensions.get('window').height
 
 const Order = () => {
+  const [userData, setUserData] = useState(null)
   const navigation = useNavigation()
-  const cart = useSelector((state) => state.cart)
   const [checked_1, setChecked_1] = useState('delivery')
   const [checked_2, setChecked_2] = useState('cash')
 
+  const cartSelector = (state) => state.cart
+  const cartTotalPriceSelector = createSelector([cartSelector], (cart) =>
+    cart.reduce(
+      (total, current) => (total += current.price * current.quantity),
+      0
+    )
+  )
+  const dispatch = useDispatch()
+  const cart = useSelector((state) => state.cart)
+  const totalPrice = useSelector(cartTotalPriceSelector)
+
+  const getUser = async () => {
+    const user = auth.currentUser
+    db.collection('users')
+      .doc(user.uid)
+      .get()
+      .then((documentSnapshot) => {
+        if (documentSnapshot.exists) {
+          console.log('User Data', documentSnapshot.data())
+          setUserData(documentSnapshot.data())
+        }
+      })
+      .catch((error) => alert(error.message))
+  }
+
+  useEffect(() => {
+    getUser()
+  }, [])
+
+  const SetOrder = () => {
+    const now = new Date()
+    const user = auth.currentUser
+    return db
+      .collection('orders')
+      .doc()
+      .set({
+        name: userData.name,
+        phone: userData.phone,
+        house: userData.house,
+        kv: userData.kv,
+        pod: userData.pod,
+        street: userData.street,
+        doc: user.uid,
+        Price: totalPrice,
+        TimeOrder: now,
+        delivery: checked_1,
+        payment: checked_2,
+
+        products: cart,
+      })
+  }
   //   let [fontsLoaded] = useFonts({
   //     Philosopher_400Regular,
   //     Philosopher_700Bold,
@@ -46,11 +99,15 @@ const Order = () => {
           <TextInput
             placeholder="Имя*"
             placeholderTextColor={'red'}
+            value={userData ? userData.name : ''}
+            onChangeText={(txt) => setUserData({ ...userData, name: txt })}
             style={styles.input}
           />
           <TextInput
             placeholder="Телефон*"
             placeholderTextColor={'red'}
+            value={userData ? userData.phone : ''}
+            onChangeText={(txt) => setUserData({ ...userData, phone: txt })}
             style={styles.input}
           />
         </View>
@@ -82,7 +139,7 @@ const Order = () => {
             />
           </View>
           <View style={styles.redioText}>
-            <Text>самовызов</Text>
+            <Text>самовывоз</Text>
           </View>
           <View
             style={{ borderWidth: 1, borderColor: 'red', borderRadius: 50 }}
@@ -100,6 +157,8 @@ const Order = () => {
             <TextInput
               placeholder="Адрес доставки*"
               placeholderTextColor={'red'}
+              value={userData ? userData.street : ''}
+              onChangeText={(txt) => setUserData({ ...userData, street: txt })}
               style={styles.input}
             />
           </View>
@@ -112,16 +171,22 @@ const Order = () => {
             <TextInput
               placeholder="дом"
               placeholderTextColor={'red'}
+              value={userData ? userData.house : ''}
+              onChangeText={(txt) => setUserData({ ...userData, house: txt })}
               style={styles.input}
             />
             <TextInput
               placeholder="подъезд"
               placeholderTextColor={'red'}
+              value={userData ? userData.pod : ''}
+              onChangeText={(txt) => setUserData({ ...userData, pod: txt })}
               style={styles.input}
             />
             <TextInput
               placeholder="кв"
               placeholderTextColor={'red'}
+              value={userData ? userData.kv : ''}
+              onChangeText={(txt) => setUserData({ ...userData, kv: txt })}
               style={styles.input}
             />
           </View>
@@ -176,10 +241,28 @@ const Order = () => {
         </View>
         <View style={styles.blockText}>
           <Text style={styles.styleText}>
-            Итого к оплате: <Text style={{ fontSize: 24 }}> 1099 ₽ P </Text>
+            Итого к оплате:{' '}
+            <Text style={{ fontSize: 24 }}> {totalPrice} ₽ </Text>
           </Text>
+          <Text style={{ fontSize: 12 }}>без учета доставки </Text>
         </View>
-        <Button title="Оформить заказ" />
+        <View>
+          <TouchableOpacity
+            onPress={() => {
+              if (userData.name === '' || userData.phone === '') {
+                alert('введите личные данные')
+              } else {
+                SetOrder()
+                navigation.replace('Conf')
+              }
+            }}
+            style={styles.button}
+          >
+            <Text style={{ color: '#fff', fontWeight: '700' }}>
+              Оформить заказ
+            </Text>
+          </TouchableOpacity>
+        </View>
       </View>
     </ScrollView>
   )
@@ -209,6 +292,16 @@ const styles = StyleSheet.create({
   redioText: {
     justifyContent: 'center',
     marginRight: 10,
+  },
+  button: {
+    // justifyContent: 'center',
+    // alignItems: 'center',
+    marginVertical: 10,
+    backgroundColor: 'red',
+    width: '80%',
+    padding: 15,
+    borderRadius: 15,
+    alignItems: 'center',
   },
 })
 

@@ -9,6 +9,8 @@ import {
   TextInput,
   TouchableOpacity,
   Button,
+  Image,
+  Dimensions,
 } from 'react-native'
 import { ButtonGoogle, ButtonFacebook } from '../components/CustomButton'
 
@@ -46,6 +48,11 @@ import { ButtonGoogle, ButtonFacebook } from '../components/CustomButton'
 //     picture: "https://dlvry.ru/upload/resize_cache/iblock/01a/900_900_1/chuka-sarado.jpg",
 //   }
 // ]
+
+const WIDTH = Dimensions.get('window').width
+const HEIGHT = Dimensions.get('window').height
+
+const pol_width = WIDTH / 2 - 20
 
 const Login = () => {
   const [email, setEmail] = useState('')
@@ -97,34 +104,38 @@ const Login = () => {
       .catch((error) => alert(error.message))
   }
 
-  // const addCol = () => {
-  //   Pizza25.forEach(function(obj) {
-  //     return db
-  //       .collection('Салаты')
-  //       .doc()
-  //       .set({
-  //         id: obj.id,
-  //         category_id: obj.category_id,
-  //         name: obj.name,
-  //         description: obj.description,
-  //         price: obj.price,
-  //         picture: obj.picture,
-  //       })
-  //       .then(function(docRef) {
-  //         console.log('Document written with ID: ')
-  //       })
-  //       .catch(function(error) {
-  //         console.error('Error adding document: ', error)
-  //       })
-  //   })
-  // }
+  const addCol = () => {
+    Pizza25.forEach(function(obj) {
+      return db
+        .collection('Салаты')
+        .doc()
+        .set({
+          id: obj.id,
+          category_id: obj.category_id,
+          name: obj.name,
+          description: obj.description,
+          price: obj.price,
+          picture: obj.picture,
+        })
+        .then(function(docRef) {
+          console.log('Document written with ID: ')
+        })
+        .catch(function(error) {
+          console.error('Error adding document: ', error)
+        })
+    })
+  }
 
   return (
     <KeyboardAvoidingView
       style={styles.container}
       behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
     >
-      <View style={styles.inputcontainer} beha>
+      <View style={styles.inputcontainer}>
+        <Image
+          source={require('../assets/authorization/user.png')}
+          style={styles.user}
+        />
         <TextInput
           placeholder="email"
           placeholderTextColor={'red'}
@@ -202,4 +213,10 @@ const styles = StyleSheet.create({
   },
   buttonText: { color: '#fff', fontWeight: '700', fontSize: 16 },
   buttonOutLineText: { color: 'red', fontWeight: '700', fontSize: 16 },
+  user: {
+    resizeMode: 'contain',
+    height: HEIGHT * 0.08,
+    width: '100%',
+    marginBottom: 10,
+  },
 })

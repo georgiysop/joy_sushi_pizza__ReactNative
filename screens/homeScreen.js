@@ -93,8 +93,8 @@ const Home = () => {
   return (
     <View style={styles.container}>
       <ScrollView>
-        {/* <Slider imgMassivSlider={imgMassivSlider} />
-        <SearchComponent setTerm={setTerm} /> */}
+        <Slider imgMassivSlider={imgMassivSlider} />
+        <SearchComponent setTerm={setTerm} />
 
         <FlatList
           data={commonCategories}
