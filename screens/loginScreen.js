@@ -163,9 +163,14 @@ const Login = () => {
         >
           <Text style={styles.buttonOutLineText}>Регистрация</Text>
         </TouchableOpacity>
-        {/* <View>
-          <ButtonGoogle title="авторизироваться через   " />
-        </View> */}
+
+        {/* <TouchableOpacity style={styles.btnstyle2}>
+          <Text style={styles.btntext2}>авторизироваться через </Text>
+          <Image
+            source={require('../assets/authorization/google.png')}
+            style={styles.image}
+          />
+        </TouchableOpacity> */}
       </View>
     </KeyboardAvoidingView>
   )
@@ -218,5 +223,25 @@ const styles = StyleSheet.create({
     height: HEIGHT * 0.08,
     width: '100%',
     marginBottom: 10,
+  },
+  btnstyle2: {
+    marginTop: 5,
+    flexDirection: 'row',
+    backgroundColor: '#fff',
+    borderRadius: 10,
+    borderWidth: 1,
+    borderColor: '#FF0000',
+    padding: 8,
+    justifyContent: 'center',
+    alignItems: 'center',
+    width: 250,
+  },
+  btntext2: {
+    color: '#FF0000',
+    fontSize: 15,
+  },
+  image: {
+    width: 20,
+    height: 20,
   },
 })

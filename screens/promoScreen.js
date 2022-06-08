@@ -59,6 +59,7 @@ const Promo = () => {
   // if (!fontsLoaded) {
   //   return <AppLoading />
   // } else {
+
   return (
     <View>
       <FlatList

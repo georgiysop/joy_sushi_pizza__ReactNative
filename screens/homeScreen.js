@@ -3,6 +3,7 @@ import Slider from '../components/Slider'
 import SearchComponent from '../components/Search'
 import CategoryItem from '../components/categoryItem'
 import FormProducts from '../components/FormProducts'
+import SpecialOffers from '../components/SpecialOffers'
 
 import { ScrollView } from 'react-native-virtualized-view'
 import {
@@ -91,11 +92,10 @@ const Home = () => {
   ]
 
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
       <ScrollView>
-        <Slider imgMassivSlider={imgMassivSlider} />
-        <SearchComponent setTerm={setTerm} />
-
+        {/* <Slider imgMassivSlider={imgMassivSlider} /> */}
+        <SpecialOffers />
         <FlatList
           data={commonCategories}
           renderItem={({ item, index }) => {
@@ -113,10 +113,9 @@ const Home = () => {
           showsHorizontalScrollIndicator={false}
           keyExtractor={(category) => category.name}
         />
-
         <FormProducts product={term} />
       </ScrollView>
-    </View>
+    </SafeAreaView>
   )
 }
 

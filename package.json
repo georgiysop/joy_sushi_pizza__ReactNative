@@ -16,6 +16,7 @@
     "@expo-google-fonts/roboto": "^0.2.2",
     "@khanshamshad32/carousel": "^1.0.1",
     "@react-native-community/masked-view": "^0.1.11",
+    "@react-native-community/netinfo": "^9.0.0",
     "@react-navigation/bottom-tabs": "^6.2.0",
     "@react-navigation/drawer": "^6.3.1",
     "@react-navigation/native": "^6.0.8",
@@ -53,7 +54,8 @@
     "react-redux": "^8.0.2",
     "redux": "^4.2.0",
     "redux-devtools-extension": "^2.13.9",
-    "redux-thunk": "^2.4.1"
+    "redux-thunk": "^2.4.1",
+    "expo-google-sign-in": "~10.1.0"
   },
   "devDependencies": {
     "@babel/core": "^7.12.9",

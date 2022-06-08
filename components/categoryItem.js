@@ -30,6 +30,7 @@ export default function CategoryItem({
 
 const styles = StyleSheet.create({
   container: {
+    marginTop: 15,
     marginBottom: 15,
     width: 87,
     height: 100,

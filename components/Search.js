@@ -3,26 +3,11 @@ import FontAwesome from 'react-native-vector-icons/FontAwesome'
 
 import { StyleSheet, View, Text, TextInput } from 'react-native'
 
-const SearchComponent = ({ setTerm }) => {
-  const [input, setInput] = useState('')
-
-  const handleEndEditing = () => {
-    if (!input) return
-    setTerm(input)
-    setInput('')
-  }
+const SearchComponent = () => {
   return (
     <View style={styles.container}>
       <FontAwesome name="search" size={25} />
-      <TextInput
-        placeholder="ням ням"
-        value={input}
-        style={styles.input}
-        onChangeText={(text) => {
-          setInput(text)
-        }}
-        onEndEditing={handleEndEditing}
-      />
+      <TextInput placeholder="ням ням ням        " style={styles.input} />
     </View>
   )
 }

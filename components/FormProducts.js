@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { addToCart } from '../redux/cartSlice'
 import { useDispatch, useSelector } from 'react-redux'
 import { MaterialIcons } from '@expo/vector-icons'
+import FontAwesome from 'react-native-vector-icons/FontAwesome'
 import { auth, db } from '../firebase'
 import {
   StyleSheet,
@@ -11,7 +12,7 @@ import {
   Image,
   Dimensions,
   TouchableOpacity,
-  ActivityIndicator,
+  TextInput,
   LogBox,
 } from 'react-native'
 
@@ -24,9 +25,10 @@ const pol_width = WIDTH / 2 - 20
 // const [{data, loading, error}, searchProducts] =
 
 function FormProducts(props) {
-  
-  const dispatch = useDispatch()
+  const [masterData, setmasterData] = useState([])
+  const [search, setsearch] = useState('')
   const [product, setProduct] = useState([]) // Initial empty array of users
+  const dispatch = useDispatch()
 
   useEffect(() => {
     const subscriber = db
@@ -43,6 +45,7 @@ function FormProducts(props) {
         })
 
         setProduct(product)
+        setmasterData(product)
         // console.log(product)
       })
 
@@ -50,8 +53,32 @@ function FormProducts(props) {
     return () => subscriber()
   }, [])
 
+  const searchFilter = (text) => {
+    if (text) {
+      const newData = masterData.filter((item) => {
+        const itemData = item.name ? item.name.toUpperCase() : ''.toUpperCase()
+        const textData = text.toUpperCase()
+        return itemData.indexOf(textData) > -1
+      })
+      setProduct(newData)
+      setsearch(text)
+    } else {
+      setProduct(masterData)
+      setsearch(text)
+    }
+  }
+
   return (
     <View style={styles.container}>
+      <View style={styles.sty}>
+        <FontAwesome name="search" size={25} />
+        <TextInput
+          placeholder="ням ням ням        "
+          style={styles.input}
+          value={search}
+          onChangeText={(text) => searchFilter(text)}
+        />
+      </View>
       <FlatList
         data={product}
         numColumns={2}
@@ -115,8 +142,8 @@ const styles = StyleSheet.create({
   },
   blockProduct: {
     marginHorizontal: 10,
-    marginBottom: 10,
-    height: 220,
+
+    height: '100%',
     width: pol_width,
     borderRadius: 10,
 
@@ -131,7 +158,7 @@ const styles = StyleSheet.create({
     borderTopRightRadius: 10,
 
     width: '100%',
-    height: HEIGHT * 0.138,
+    height: HEIGHT * 0.18,
   },
   price: {
     fontSize: 24,
@@ -147,6 +174,22 @@ const styles = StyleSheet.create({
     padding: 10,
     fontSize: 14,
     fontWeight: '700',
+  },
+  sty: {
+    flexDirection: 'row',
+    margin: 15,
+    marginHorizontal: 20,
+    backgroundColor: 'white',
+    shadowColor: 'black',
+    shadowOffset: { width: 5, height: 5 },
+    elevation: 3,
+    shadowOpacity: 0.3,
+    padding: 10,
+    borderRadius: 40,
+  },
+  input: {
+    fontSize: 20,
+    marginLeft: 10,
   },
   // namePriceAdd: {
   //   flexDirection: 'row',

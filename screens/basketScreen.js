@@ -210,10 +210,10 @@ const styles = StyleSheet.create({
     margin: 10,
   },
   kartinka: {
-    resizeMode: 'contain',
+    resizeMode: 'stretch',
     borderRadius: 10,
     width: '100%',
-    height: HEIGHT * 0.138,
+    height: HEIGHT * 0.16,
   },
   viewStyte: {
     flexDirection: 'row',

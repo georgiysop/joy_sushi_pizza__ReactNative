@@ -68,6 +68,7 @@ const Profil = () => {
   return (
     <ScrollView>
       <View style={styles.container}>
+      
         <View style={styles.form}>
           <TextInput
             placeholder="email"
