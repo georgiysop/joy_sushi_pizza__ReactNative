@@ -164,6 +164,9 @@ const Login = () => {
           <Text style={styles.buttonOutLineText}>Регистрация</Text>
         </TouchableOpacity>
 
+        <TouchableOpacity style={styles.button} onPress={()=> {navigation.navigate('Fast')}}>
+          <Text style={styles.buttonText}>Быстрый заказ</Text>
+        </TouchableOpacity>
         {/* <TouchableOpacity style={styles.btnstyle2}>
           <Text style={styles.btntext2}>авторизироваться через </Text>
           <Image
@@ -204,6 +207,7 @@ const styles = StyleSheet.create({
     marginTop: 20,
   },
   button: {
+    marginTop:5,
     backgroundColor: 'red',
     width: '100%',
     padding: 10,
