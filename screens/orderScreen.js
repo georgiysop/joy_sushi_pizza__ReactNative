@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react'
+import {clear } from '../redux/cartSlice'
 import { db, auth } from '../firebase'
 import { useSelector, useDispatch } from 'react-redux'
 import { useNavigation } from '@react-navigation/core'
@@ -33,7 +34,10 @@ const Order = () => {
   const cartSelector = (state) => state.cart
   const cartTotalPriceSelector = createSelector([cartSelector], (cart) =>
     cart.reduce(
-      (total, current) => (total += current.price * current.quantity),
+      (total, current) =>
+        (total +=
+          (current.newPrice ? current.newPrice : current.price) *
+          current.quantity),
       0
     )
   )
@@ -77,7 +81,6 @@ const Order = () => {
         TimeOrder: now,
         delivery: checked_1,
         payment: checked_2,
-
         products: cart,
       })
   }
@@ -232,13 +235,14 @@ const Order = () => {
             />
           </View>
         </View>
-        <View style={{ marginTop: 10, marginBottom: 30 }}>
+        {/* <View style={{ marginTop: 10, marginBottom: 30 }}>
           <TextInput
             placeholder="Комментарий к заказу*"
             placeholderTextColor={'red'}
+           
             style={styles.input}
           />
-        </View>
+        </View> */}
         <View style={styles.blockText}>
           <Text style={styles.styleText}>
             Итого к оплате:{' '}
@@ -253,6 +257,7 @@ const Order = () => {
                 alert('введите личные данные')
               } else {
                 SetOrder()
+                dispatch(clear())
                 navigation.replace('Conf')
               }
             }}
@@ -287,7 +292,7 @@ const styles = StyleSheet.create({
     opacity: 0.4,
     width: '100%',
   },
-  blockText: { marginBottom: 20 },
+  blockText: { marginBottom: 20,marginTop:20 },
   styleText: { fontSize: 18, fontWeight: 'bold', color: 'red' },
   redioText: {
     justifyContent: 'center',

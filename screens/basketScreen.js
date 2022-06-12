@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { increment, decrement, clear, removeItem } from '../redux/cartSlice'
+import { increment, decrement, removeItem } from '../redux/cartSlice'
 import { useDispatch, useSelector } from 'react-redux'
 import AntDesign from 'react-native-vector-icons/AntDesign'
 const { createSelector } = require('@reduxjs/toolkit')
@@ -30,7 +30,10 @@ const Basket = ({ navigation }) => {
   const cartSelector = (state) => state.cart
   const cartTotalPriceSelector = createSelector([cartSelector], (cart) =>
     cart.reduce(
-      (total, current) => (total += current.price * current.quantity),
+      (total, current) =>
+        (total +=
+          (current.newPrice ? current.newPrice : current.price) *
+          current.quantity),
       0
     )
   )
@@ -146,7 +149,9 @@ const Basket = ({ navigation }) => {
                       fontSize: 20,
                     }}
                   >
-                    {item.quantity * item.price} ₽
+                    {item.quantity *
+                      (item.newPrice ? item.newPrice : item.price)}{' '}
+                    ₽
                   </Text>
                   <Text
                     style={{
@@ -154,7 +159,7 @@ const Basket = ({ navigation }) => {
                       fontSize: 14,
                     }}
                   >
-                    {item.price} ₽/ шт
+                    {item.newPrice ? item.newPrice : item.price} ₽/ шт
                   </Text>
                 </View>
               </View>
