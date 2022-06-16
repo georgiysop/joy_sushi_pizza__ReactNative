@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react'
 import { useNavigation } from '@react-navigation/core'
-import { clear } from '../redux/cartSlice'
 import { CountdownCircleTimer } from 'react-native-countdown-circle-timer'
-import { useSelector, useDispatch } from 'react-redux'
+
+import { useFonts } from 'expo-font'
+import AppLoading from 'expo-app-loading'
 import useTimeout from '../components/useTimeout'
 // import { auth, db } from '../firebase'
 import {
@@ -19,14 +20,20 @@ const HEIGHT = Dimensions.get('window').height
 const pol_width = WIDTH / 2 - 20
 
 function Conf() {
+  let [fontsLoaded] = useFonts({
+    'Philosopher-Regular': require('../assets/fonts/Philosopher-Regular.ttf'),
+    'Philosopher-Bold': require('../assets/fonts/Philosopher-Bold.ttf'),
+  })
+
   const navigation = useNavigation()
-  const dispatch = useDispatch()
 
   useTimeout(() => {
     navigation.navigate('Home')
-    // dispatch(clear(useSelector((state) => state.cart)))
   }, 5000)
 
+  if (!fontsLoaded) {
+    return <AppLoading />
+  }
   return (
     <View style={styles.container}>
       <View>
@@ -38,24 +45,43 @@ function Conf() {
       <View style={{ width: '70%' }}>
         <Text
           style={{
-            fontSize: 18,
+            fontSize: 22,
             textAlign: 'center',
-            fontWeight: '700',
+
+            fontFamily: 'Philosopher-Bold',
             color: 'green',
             paddingBottom: 10,
           }}
         >
           Заказ принят
         </Text>
-        <Text style={{ fontSize: 14, textAlign: 'center', fontWeight: '700' }}>
+        <Text
+          style={{
+            fontSize: 16,
+            textAlign: 'center',
+            fontFamily: 'Philosopher-Bold',
+          }}
+        >
           В течении минуты
         </Text>
-        <Text style={{ fontSize: 14, textAlign: 'center', fontWeight: '700' }}>
+        <Text
+          style={{
+            fontSize: 16,
+            textAlign: 'center',
+            fontFamily: 'Philosopher-Bold',
+          }}
+        >
           менеджер вам позвонит
         </Text>
       </View>
       <View style={{ marginTop: 10, width: '70%', marginBottom: 20 }}>
-        <Text style={{ fontSize: 10, textAlign: 'center' }}>
+        <Text
+          style={{
+            fontSize: 12,
+            textAlign: 'center',
+            fontFamily: 'Philosopher-Regular',
+          }}
+        >
           Переадресация через ...
         </Text>
       </View>
@@ -98,24 +124,3 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
 })
-
-//   <View style={styles.container}>
-//   <View>
-//     <Image
-//       source={require('../assets/network/oops.png')}
-//       style={styles.imStyle}
-//     />
-//   </View>
-//   <View style={{ width: '70%' }}>
-//     <Text style={{ fontSize: 14, textAlign: 'center', }}>
-//      похоже что-то с интернетом
-//     </Text>
-//   </View>
-//   <View style={{justifyContent:'center' }}>
-//   <TouchableOpacity style={styles.button}>
-//     <Text style={{ fontSize: 14, textAlign: 'center', fontWeight: '700', color:'#fff' }}>
-//       повторить попытку
-//     </Text>
-//     </TouchableOpacity>
-//   </View>
-// </View>

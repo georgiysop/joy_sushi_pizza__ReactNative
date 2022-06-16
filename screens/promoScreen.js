@@ -1,11 +1,7 @@
 import React, { useState, useEffect } from 'react'
-import AppLoading from 'expo-app-loading'
 import { auth, db } from '../firebase'
-import {
-  useFonts,
-  Philosopher_400Regular,
-} from '@expo-google-fonts/philosopher'
-
+import { useFonts } from 'expo-font'
+import AppLoading from 'expo-app-loading'
 import {
   StyleSheet,
   ScrollView,
@@ -22,6 +18,10 @@ const WIDTH = Dimensions.get('window').width
 const HEIGHT = Dimensions.get('window').height
 
 const Promo = () => {
+  let [fontsLoaded] = useFonts({
+    'Philosopher-Regular': require('../assets/fonts/Philosopher-Regular.ttf'),
+    'Philosopher-Bold': require('../assets/fonts/Philosopher-Bold.ttf'),
+  })
   const [loading, setLoading] = useState(true) // Set loading to true on component mount
   const [promo, setPromo] = useState([]) // Initial empty array of users
 
@@ -52,13 +52,9 @@ const Promo = () => {
     )
   }
 
-  // let [fontsLoaded] = useFonts({
-  //   Philosopher_400Regular,
-  // })
-
-  // if (!fontsLoaded) {
-  //   return <AppLoading />
-  // } else {
+  if (!fontsLoaded) {
+    return <AppLoading />
+  }
 
   return (
     <View>
@@ -100,11 +96,11 @@ const styles = StyleSheet.create({
   },
   textStyle: {
     textAlign: 'center',
-    fontFamily: 'Philosopher_400Regular',
+    fontFamily: 'Philosopher-Regular',
 
     paddingLeft: 8,
     paddingRight: 8,
-    fontSize: 16,
+    fontSize: 18,
     borderBottomColor: 'red',
   },
   viewStyte: {

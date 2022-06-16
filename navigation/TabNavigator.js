@@ -8,21 +8,6 @@ import Promo from '../screens/promoScreen'
 import Profile from '../screens/profilScreen'
 import Info from '../screens/infoScreen'
 import Basket from '../screens/basketScreen'
-import {
-  SafeAreaView,
-  StyleSheet,
-  StatusBar,
-  Platform,
-  ScrollView,
-  View,
-  Text,
-  BackHandler,
-  Button,
-  Alert,
-  Image,
-  Dimensions,
-  AppRegistry,
-} from 'react-native'
 
 const Tab = createBottomTabNavigator()
 

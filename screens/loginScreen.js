@@ -1,5 +1,7 @@
 import { useNavigation } from '@react-navigation/core'
 import React, { useState, useEffect } from 'react'
+import AppLoading from 'expo-app-loading'
+import { useFonts } from 'expo-font'
 import { db, auth } from '../firebase'
 import {
   StyleSheet,
@@ -11,8 +13,8 @@ import {
   Button,
   Image,
   Dimensions,
+  Alert,
 } from 'react-native'
-import { ButtonGoogle, ButtonFacebook } from '../components/CustomButton'
 
 // const Pizza25 = [
 //   {
@@ -51,10 +53,13 @@ import { ButtonGoogle, ButtonFacebook } from '../components/CustomButton'
 
 const WIDTH = Dimensions.get('window').width
 const HEIGHT = Dimensions.get('window').height
-
 const pol_width = WIDTH / 2 - 20
 
 const Login = () => {
+  let [fontsLoaded] = useFonts({
+    'Philosopher-Regular': require('../assets/fonts/Philosopher-Regular.ttf'),
+    'Philosopher-Bold': require('../assets/fonts/Philosopher-Bold.ttf'),
+  })
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
 
@@ -71,12 +76,13 @@ const Login = () => {
 
   const now = new Date()
 
-  const handleSingUp = () => {
+  const handleSingUp = async () => {
     auth
       .createUserWithEmailAndPassword(email, password)
       .then((userCredentials) => {
         const user = userCredentials.user
         console.log('Зарегистрирован: ', user.email)
+        // userCredentials.user.sendEmailVerification()
         return db
           .collection('users')
           .doc(userCredentials.user.uid)
@@ -93,6 +99,7 @@ const Login = () => {
       })
       .catch((error) => alert(error.message))
   }
+
 
   const handleLogin = () => {
     auth
@@ -125,7 +132,9 @@ const Login = () => {
         })
     })
   }
-
+  if (!fontsLoaded) {
+    return <AppLoading />
+  }
   return (
     <KeyboardAvoidingView
       style={styles.container}
@@ -153,6 +162,9 @@ const Login = () => {
         />
       </View>
       <View style={styles.buttoncontainer}>
+        {/* <TouchableOpacity style={[styles.button, styles.buttonOutLine]}>
+          <Text style={styles.buttonOutLineText}>Войти с телефона </Text>
+        </TouchableOpacity> */}
         <TouchableOpacity onPress={handleLogin} style={styles.button}>
           <Text style={styles.buttonText}>Войти</Text>
         </TouchableOpacity>
@@ -163,8 +175,33 @@ const Login = () => {
         >
           <Text style={styles.buttonOutLineText}>Регистрация</Text>
         </TouchableOpacity>
-
-        <TouchableOpacity style={styles.button} onPress={()=> {navigation.navigate('Fast')}}>
+        <TouchableOpacity
+          style={{ marginBottom: 30, marginTop: 10 }}
+          onPress={() => {
+            if (email != '') {
+              auth
+                .sendPasswordResetEmail(email)
+                .then(function() {
+                  console.log('sent ')
+                })
+                .catch(function(error) {
+                  console.log(error.message)
+                })
+            } else {
+              Alert.alert('', 'Введите почту')
+            }
+          }}
+        >
+          <Text style={{ color: 'blue', fontFamily: 'Philosopher-Regular' }}>
+            Забыли пароль ?
+          </Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={styles.button}
+          onPress={() => {
+            navigation.navigate('Fast')
+          }}
+        >
           <Text style={styles.buttonText}>Быстрый заказ</Text>
         </TouchableOpacity>
         {/* <TouchableOpacity style={styles.btnstyle2}>
@@ -197,7 +234,8 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     marginTop: 10,
     color: 'red',
-    fontSize: 16,
+    fontSize: 20,
+    fontFamily: 'Philosopher-Regular',
     opacity: 0.4,
   },
   buttoncontainer: {
@@ -207,7 +245,7 @@ const styles = StyleSheet.create({
     marginTop: 20,
   },
   button: {
-    marginTop:5,
+    marginTop: 5,
     backgroundColor: 'red',
     width: '100%',
     padding: 10,
@@ -220,8 +258,12 @@ const styles = StyleSheet.create({
     borderColor: 'red',
     borderWidth: 1,
   },
-  buttonText: { color: '#fff', fontWeight: '700', fontSize: 16 },
-  buttonOutLineText: { color: 'red', fontWeight: '700', fontSize: 16 },
+  buttonText: { color: '#fff', fontSize: 16, fontFamily: 'Philosopher-Bold' },
+  buttonOutLineText: {
+    color: 'red',
+    fontSize: 16,
+    fontFamily: 'Philosopher-Bold',
+  },
   user: {
     resizeMode: 'contain',
     height: HEIGHT * 0.08,

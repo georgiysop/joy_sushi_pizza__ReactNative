@@ -1,14 +1,11 @@
-import React, { Component } from 'react'
+import React, { useState } from 'react'
 import Icon from 'react-native-vector-icons/Ionicons'
+import { Ionicons } from '@expo/vector-icons'
 import SimpleIcon from 'react-native-vector-icons/SimpleLineIcons'
 import EvilIcons from 'react-native-vector-icons/EvilIcons'
 import Feather from 'react-native-vector-icons/Feather'
-import { List } from 'react-native-paper'
-import {
-  useFonts,
-  Philosopher_400Regular,
-} from '@expo-google-fonts/philosopher'
 import AppLoading from 'expo-app-loading'
+import { useFonts } from 'expo-font'
 
 import {
   StyleSheet,
@@ -17,189 +14,99 @@ import {
   Dimensions,
   Linking,
   ScrollView,
+  TouchableOpacity,
 } from 'react-native'
 
 const WIDTH = Dimensions.get('window').width
 const HEIGHT = Dimensions.get('window').height
-// const customFonts = {
-//     'Philosopher-Regular': require('../assets/fonts/Philosopher-Regular.ttf'),
-//       'Philosopher-Bold': require('../assets/fonts/Philosopher-Bold.ttf'),}
 
-export default class Info extends React.Component {
-  constructor() {
-    super()
-    this.state = {
-      ShowHideTextComponentView_1: false,
-      ShowHideTextComponentView_2: false,
-      ShowHideTextComponentView_3: false,
-      // fontsLoaded: false,
+const data = [
+  {
+    name: 'о нас',
+    text: `JOY-это еда , которая приносит радость! Насладиться прекрасно приготовленными наисвежайшими роллами, аппетитной пиццей и другими блюдами.\n\nПОЧЕМУ ИМЕННО МЫ ?\n\n- доставка еды существенно экономит ваше время\n- в наших роллах всегда свежая рыбка\n- курьер доставит вам пиццу еще с дымком\n- все готовятся непосредственно после получения заказа`,
+  },
+  {
+    name: 'стоимость доставки',
+    text: `Город 100р\nБесплатная доставка от 500рублей\n\nСтарый Балиндер, СМУ,\nНовый поселок 150 рублей\nБесплатная доставка от 700рублей\n\nНовый Балиндер, Слободка 200рублей\nБесплатная доставка от 900рублей\n\nМиронская 250рублей\nБесплатная доставка от 1200рублей\n\nСорокино 300рублей\nБесплатная доставка от 1500рублей\n\nКомарское, Копылово, Гришино, 400рублей\nГришино, Омутное, Верх камышенка,\nГоношиха\nБесплатная доставка от 1700рублей\n\nКокорская 500рублей\nБесплатная доставка от 2500рублей\n\nЗалесово 800рублей\nБесплатная доставка от 4000рублей`,
+  },
+  {
+    name: 'контакты',
+    text: `г.Заринск ул.Металлургов 3/2\n\n8-963-535-4144`,
+  },
+]
+const Info = () => {
+  let [fontsLoaded] = useFonts({
+    'Philosopher-Regular': require('../assets/fonts/Philosopher-Regular.ttf'),
+    'Philosopher-Bold': require('../assets/fonts/Philosopher-Bold.ttf'),
+  })
+  const [selected, setSelected] = useState(null)
+
+  const toggle = (i) => {
+    if (selected === i) {
+      return setSelected(null)
     }
+
+    setSelected(i)
   }
 
-  // async _loadFontsAsync() {
-  //   await Font.loadAsync({
-  //     'Philosopher-Regular': require('../assets/fonts/Philosopher-Regular.ttf'),
-  //     'Philosopher-Bold': require('../assets/fonts/Philosopher-Bold.ttf'),
-  //   })
-  //   this.setState({ fontsLoaded: true })
-  // }
-
-  // componentDidMount() {
-  //   this._loadFontsAsync()
-  // }
-
-  ShowHideTextComponentView_1 = () => {
-    if (this.state.ShowHideTextComponentView_1 == true) {
-      this.setState({ ShowHideTextComponentView_1: false })
-    } else {
-      this.setState({ ShowHideTextComponentView_1: true })
-    }
+  if (!fontsLoaded) {
+    return <AppLoading />
   }
+  return (
+    <ScrollView>
+      <View style={styles.center}>
+        {data.map((item, i) => (
+          <View key={i}>
+            <TouchableOpacity style={styles.viewLine} onPress={() => toggle(i)}>
+              <Text style={styles.textLine}>{item.name}</Text>
 
-  ShowHideTextComponentView_2 = () => {
-    if (this.state.ShowHideTextComponentView_2 == true) {
-      this.setState({ ShowHideTextComponentView_2: false })
-    } else {
-      this.setState({ ShowHideTextComponentView_2: true })
-    }
-  }
-
-  ShowHideTextComponentView_3 = () => {
-    if (this.state.ShowHideTextComponentView_3 == true) {
-      this.setState({ ShowHideTextComponentView_3: false })
-    } else {
-      this.setState({ ShowHideTextComponentView_3: true })
-    }
-  }
-
-  render() {
-    // if (!this.state.fontsLoaded) {
-    //   return <AppLoading />
-    // }
-
-    return (
-      <ScrollView>
-        <View style={styles.center}>
-          <View style={styles.viewLine}>
-            <Text style={styles.textLine}>о нас</Text>
-            <Icon
-              name="chevron-down-outline"
-              size={24}
-              onPress={this.ShowHideTextComponentView_1}
-            ></Icon>
+              {selected === i ? (
+                <Ionicons name="chevron-up" size={24} color="black" />
+              ) : (
+                <Ionicons name="chevron-down-sharp" size={24} color="black" />
+              )}
+            </TouchableOpacity>
+            {selected === i ? (
+              <View style={{ width: WIDTH * 0.9 }}>
+                <Text style={styles.textLine}>{item.text}</Text>
+              </View>
+            ) : (
+              <View></View>
+            )}
           </View>
-          {this.state.ShowHideTextComponentView_1 ? (
-            <View style={styles.textList}>
-              <Text
-                style={{
-                  fontSize: 18,
-                  color: '#000',
-                  fontFamily: 'Philosopher_400Regular',
-                }}
-              >
-                <Text>{`JOY-это еда , которая приносит радость! Насладиться прекрасно приготовленными наисвежайшими роллами, аппетитной пиццей и другими блюдами.\n\n`}</Text>
-                <Text>{`ПОЧЕМУ ИМЕННО МЫ ?\n\n- доставка еды существенно экономит ваше время\n- в наших роллах всегда свежая рыбка\n- курьер доставит вам пиццу еще с дымком\n- все готовятся непосредственно после получения заказа`}</Text>
-              </Text>
-            </View>
-          ) : null}
+        ))}
 
-          <View style={styles.viewLine}>
-            <Text style={styles.textLine}>стоимость доставки</Text>
-            <Icon
-              name="chevron-down-outline"
-              size={24}
-              onPress={this.ShowHideTextComponentView_2}
-            ></Icon>
-          </View>
-          {this.state.ShowHideTextComponentView_2 ? (
-            <View style={styles.textList}>
-              <Text
-                style={{
-                  fontSize: 18,
-                  color: '#000',
-                  fontFamily: 'Philosopher_400Regular',
-                }}
-              >
-                <Text>{`Город 100р
-Бесплатная доставка от 500рублей
-
-Старый Балиндер, СМУ, Новый поселок 150 рублей
-Бесплатная доставка от 700рублей
-
-Новый Балиндер, Слободка 200рублей
-Бесплатная доставка от 900рублей
-
-Миронская 250рублей
-Бесплатная доставка от 1200рублей
-
-Сорокино 300рублей
-Бесплатная доставка от 1500рублей
-
-Комарское, Копылово, Гришино, 400рублей
-Гришино, Омутное, Верх камышенка,
-Гоношиха
-Бесплатная доставка от 1700рублей
-
-Кокорская 500рублей
-Бесплатная доставка от 2500рублей
-
-Залесово 800рублей
-Бесплатная доставка от 4000рублей`}</Text>
-              </Text>
-            </View>
-          ) : null}
-
-          <View style={styles.viewLine}>
-            <Text style={styles.textLine}>контакты</Text>
-            <Icon
-              name="chevron-down-outline"
-              size={24}
-              onPress={this.ShowHideTextComponentView_3}
-            />
-          </View>
-          {this.state.ShowHideTextComponentView_3 ? (
-            <View style={styles.textList}>
-              <Text
-                style={{
-                  fontSize: 18,
-                  color: '#000',
-                  fontFamily: 'Philosopher_400Regular',
-                }}
-              >
-                <Text>{`г.Заринск ул.Металлургов 3/2\n\n8-963-535-4144`}</Text>
-              </Text>
-            </View>
-          ) : null}
-          <View style={styles.viewButtonImage}>
-            <SimpleIcon
-              name="social-vkontakte"
-              size={52}
-              style={styles.ButtonImage}
-              color="rgba(207, 99, 45, 1)"
-              onPress={() => Linking.openURL('https://vk.com/joy_foods')}
-            />
-            <EvilIcons
-              name="sc-telegram"
-              size={60}
-              style={styles.ButtonImage}
-              color="rgba(207, 99, 45, 1)"
-              onPress={() => Linking.openURL('https://t.me/joyfoods')}
-            />
-            <Feather
-              name="instagram"
-              size={49}
-              style={styles.ButtonImage}
-              color="rgba(207, 99, 45, 1)"
-              onPress={() =>
-                Linking.openURL('https://www.instagram.com/joy_sushi_pizza/')
-              }
-            />
-          </View>
+        <View style={styles.viewButtonImage}>
+          <SimpleIcon
+            name="social-vkontakte"
+            size={52}
+            style={styles.ButtonImage}
+            color="rgba(207, 99, 45, 1)"
+            onPress={() => Linking.openURL('https://vk.com/joy_foods')}
+          />
+          <EvilIcons
+            name="sc-telegram"
+            size={60}
+            style={styles.ButtonImage}
+            color="rgba(207, 99, 45, 1)"
+            onPress={() => Linking.openURL('https://t.me/joyfoods')}
+          />
+          <Feather
+            name="instagram"
+            size={49}
+            style={styles.ButtonImage}
+            color="rgba(207, 99, 45, 1)"
+            onPress={() =>
+              Linking.openURL('https://www.instagram.com/joy_sushi_pizza/')
+            }
+          />
         </View>
-      </ScrollView>
-    )
-  }
+      </View>
+    </ScrollView>
+  )
 }
+
+export default Info
 
 const styles = StyleSheet.create({
   center: {
@@ -216,10 +123,11 @@ const styles = StyleSheet.create({
     width: WIDTH * 0.9,
     flexDirection: 'row',
     justifyContent: 'space-between',
+    marginBottom: 20,
   },
   textLine: {
     fontSize: 18,
-    fontFamily: 'Philosopher_400Regular',
+    fontFamily: 'Philosopher-Regular',
   },
   viewButtonImage: { flexDirection: 'row' },
   ButtonImage: {

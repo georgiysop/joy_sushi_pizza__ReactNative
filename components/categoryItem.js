@@ -1,6 +1,8 @@
 import { View, Text, StyleSheet, Image, TouchableOpacity } from 'react-native'
 import React, { useState, useEffect } from 'react'
 import { auth, db } from '../firebase'
+import { useFonts } from 'expo-font'
+import AppLoading from 'expo-app-loading'
 export default function CategoryItem({
   name,
   imgu,
@@ -8,6 +10,13 @@ export default function CategoryItem({
   active,
   handlePress,
 }) {
+  let [fontsLoaded] = useFonts({
+    'Philosopher-Regular': require('../assets/fonts/Philosopher-Regular.ttf'),
+    'Philosopher-Bold': require('../assets/fonts/Philosopher-Bold.ttf'),
+  })
+  if (!fontsLoaded) {
+    return <AppLoading />
+  }
   return (
     <TouchableOpacity onPress={handlePress}>
       <View
@@ -64,7 +73,7 @@ const styles = StyleSheet.create({
     borderRadius: 50,
   },
   header: {
-    fontWeight: 'bold',
     textAlign: 'center',
+    fontFamily: 'Philosopher-Bold',
   },
 })

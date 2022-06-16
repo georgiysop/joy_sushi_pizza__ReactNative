@@ -1,7 +1,8 @@
 import { useNavigation } from '@react-navigation/core'
 import React, { useReducer, useState, useEffect } from 'react'
 import { auth, db } from '../firebase'
-import { ButtonGoogle } from '../components/CustomButton'
+import { useFonts } from 'expo-font'
+import AppLoading from 'expo-app-loading'
 import {
   StyleSheet,
   View,
@@ -12,6 +13,10 @@ import {
 } from 'react-native'
 
 const Profil = () => {
+  let [fontsLoaded] = useFonts({
+    'Philosopher-Regular': require('../assets/fonts/Philosopher-Regular.ttf'),
+    'Philosopher-Bold': require('../assets/fonts/Philosopher-Bold.ttf'),
+  })
   const navigation = useNavigation()
   const [userData, setUserData] = useState(null)
 
@@ -42,15 +47,6 @@ const Profil = () => {
       .catch((error) => alert(error.message))
   }
 
-  // const handleSave = () => {
-  //   auth
-  //     .signOut()
-  //     .then(() => {
-  //       navigation.replace('Login')
-  //     })
-  //     .catch((error) => alert(error.message))
-  // }
-
   const save = () => {
     const user = auth.currentUser
     db.collection('users')
@@ -65,10 +61,13 @@ const Profil = () => {
         doc: user.uid,
       })
   }
+
+  if (!fontsLoaded) {
+    return <AppLoading />
+  }
   return (
     <ScrollView>
       <View style={styles.container}>
-      
         <View style={styles.form}>
           <TextInput
             placeholder="email"
@@ -131,13 +130,16 @@ const Profil = () => {
           <TouchableOpacity style={styles.button} onPress={save}>
             <Text style={styles.buttonText}>сохранить</Text>
           </TouchableOpacity>
+          
           {/* <TouchableOpacity style={styles.button}>
             <Text style={styles.buttonText}>Мои заказы</Text>
           </TouchableOpacity> */}
         </View>
 
         <View style={{ width: '85%', alignItems: 'center', marginTop: 20 }}>
-          <Text>Аккаунт: {auth.currentUser?.email}</Text>
+          <Text style={{ fontFamily: 'Philosopher-Bold' }}>
+            Аккаунт: {auth.currentUser?.email}
+          </Text>
           <TouchableOpacity style={styles.button} onPress={handleSingOut}>
             <Text style={styles.buttonText}>Выйти из аккаунта</Text>
           </TouchableOpacity>
@@ -169,7 +171,7 @@ const styles = StyleSheet.create({
     marginTop: 20,
   },
 
-  buttonText: { color: '#fff', fontWeight: '700', fontSize: 16 },
+  buttonText: { color: '#fff', fontSize: 16, fontFamily: 'Philosopher-Bold' },
   input: {
     backgroundColor: '#FFF0F5',
     paddingHorizontal: 15,
@@ -179,9 +181,10 @@ const styles = StyleSheet.create({
     marginTop: 10,
     marginLeft: 6,
     color: 'red',
-    fontSize: 16,
+    fontSize: 18,
     opacity: 0.4,
     width: '90%',
+    fontFamily: 'Philosopher-Regular',
   },
 })
 

@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react'
-// import { auth, db } from '../firebase'
+import { useFonts } from 'expo-font'
+import AppLoading from 'expo-app-loading'
 import {
   View,
   Text,
@@ -14,6 +15,13 @@ const HEIGHT = Dimensions.get('window').height
 const pol_width = WIDTH / 2 - 20
 
 function Ooops() {
+  let [fontsLoaded] = useFonts({
+    'Philosopher-Regular': require('../assets/fonts/Philosopher-Regular.ttf'),
+    'Philosopher-Bold': require('../assets/fonts/Philosopher-Bold.ttf'),
+  })
+  if (!fontsLoaded) {
+    return <AppLoading />
+  }
   return (
     <View style={styles.container}>
       <View>
@@ -23,7 +31,13 @@ function Ooops() {
         />
       </View>
       <View style={{ width: '70%' }}>
-        <Text style={{ fontSize: 14, textAlign: 'center' }}>
+        <Text
+          style={{
+            fontSize: 14,
+            textAlign: 'center',
+            fontFamily: 'Philosopher-Regular',
+          }}
+        >
           похоже что-то с интернетом
         </Text>
       </View>

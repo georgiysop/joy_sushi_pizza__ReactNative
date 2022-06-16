@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react'
-import {clear } from '../redux/cartSlice'
+import { clear } from '../redux/cartSlice'
 import { db, auth } from '../firebase'
+import { useFonts } from 'expo-font'
+import AppLoading from 'expo-app-loading'
 import { useSelector, useDispatch } from 'react-redux'
 import { useNavigation } from '@react-navigation/core'
 const { createSelector } = require('@reduxjs/toolkit')
@@ -11,21 +13,21 @@ import {
   Dimensions,
   Button,
   TextInput,
+  Alert,
 } from 'react-native'
 
 import { RadioButton } from 'react-native-paper'
-import AppLoading from 'expo-app-loading'
-import {
-  useFonts,
-  Philosopher_400Regular,
-  Philosopher_700Bold,
-} from '@expo-google-fonts/philosopher'
+
 import { ScrollView, TouchableOpacity } from 'react-native-gesture-handler'
 
 const WIDTH = Dimensions.get('window').width
 const HEIGHT = Dimensions.get('window').height
 
 const Order = () => {
+  let [fontsLoaded] = useFonts({
+    'Philosopher-Regular': require('../assets/fonts/Philosopher-Regular.ttf'),
+    'Philosopher-Bold': require('../assets/fonts/Philosopher-Bold.ttf'),
+  })
   const [userData, setUserData] = useState(null)
   const navigation = useNavigation()
   const [checked_1, setChecked_1] = useState('delivery')
@@ -84,14 +86,9 @@ const Order = () => {
         products: cart,
       })
   }
-  //   let [fontsLoaded] = useFonts({
-  //     Philosopher_400Regular,
-  //     Philosopher_700Bold,
-  //   })
-
-  //   if (!fontsLoaded) {
-  //     return <AppLoading />
-  //   } else {
+  if (!fontsLoaded) {
+    return <AppLoading />
+  }
   return (
     <ScrollView>
       <View style={styles.container}>
@@ -123,8 +120,8 @@ const Order = () => {
             width: '32%',
           }}
         >
-          <View style={styles.redioText}>
-            <Text>доставка</Text>
+          <View style={styles.radio}>
+            <Text style={styles.radioText}>доставка</Text>
           </View>
           <View
             style={{
@@ -141,8 +138,8 @@ const Order = () => {
               onPress={() => setChecked_1('delivery')}
             />
           </View>
-          <View style={styles.redioText}>
-            <Text>самовывоз</Text>
+          <View style={styles.radio}>
+            <Text style={styles.radioText}>самовывоз</Text>
           </View>
           <View
             style={{ borderWidth: 1, borderColor: 'red', borderRadius: 50 }}
@@ -203,8 +200,8 @@ const Order = () => {
             width: '32%',
           }}
         >
-          <View style={styles.redioText}>
-            <Text>наличными</Text>
+          <View style={styles.radio}>
+            <Text style={styles.radioText}>наличными</Text>
           </View>
           <View
             style={{
@@ -221,8 +218,8 @@ const Order = () => {
               onPress={() => setChecked_2('cash')}
             />
           </View>
-          <View style={styles.redioText}>
-            <Text>картой</Text>
+          <View style={styles.radio}>
+            <Text style={styles.radioText}>картой</Text>
           </View>
           <View
             style={{ borderWidth: 1, borderColor: 'red', borderRadius: 50 }}
@@ -248,26 +245,34 @@ const Order = () => {
             Итого к оплате:{' '}
             <Text style={{ fontSize: 24 }}> {totalPrice} ₽ </Text>
           </Text>
-          <Text style={{ fontSize: 12 }}>без учета доставки </Text>
-        </View>
-        <View>
-          <TouchableOpacity
-            onPress={() => {
-              if (userData.name === '' || userData.phone === '') {
-                alert('введите личные данные')
-              } else {
-                SetOrder()
-                dispatch(clear())
-                navigation.replace('Conf')
-              }
+          <Text
+            style={{
+              fontSize: 12,
+              fontFamily: 'Philosopher-Regular',
+              fontSize: 16,
             }}
-            style={styles.button}
           >
-            <Text style={{ color: '#fff', fontWeight: '700' }}>
-              Оформить заказ
-            </Text>
-          </TouchableOpacity>
+            без учета доставки{' '}
+          </Text>
         </View>
+      </View>
+      <View style={{ alignItems: 'center' }}>
+        <TouchableOpacity
+          onPress={() => {
+            if (userData.name === '' || userData.phone === '') {
+              Alert.alert('', 'Введите личные данные')
+            } else {
+              SetOrder()
+              dispatch(clear())
+              navigation.replace('Conf')
+            }
+          }}
+          style={styles.button}
+        >
+          <Text style={{ color: '#fff', fontWeight: '700' }}>
+            Оформить заказ
+          </Text>
+        </TouchableOpacity>
       </View>
     </ScrollView>
   )
@@ -288,25 +293,24 @@ const styles = StyleSheet.create({
     marginBottom: 10,
 
     color: 'red',
-    fontSize: 16,
+    fontSize: 20,
+    fontFamily: 'Philosopher-Regular',
     opacity: 0.4,
     width: '100%',
   },
-  blockText: { marginBottom: 20,marginTop:20 },
-  styleText: { fontSize: 18, fontWeight: 'bold', color: 'red' },
-  redioText: {
+  blockText: { marginVertical: 10 },
+  styleText: { fontSize: 24, fontFamily: 'Philosopher-Bold', color: 'red' },
+  radio: {
     justifyContent: 'center',
     marginRight: 10,
   },
+  radioText: { fontFamily: 'Philosopher-Regular', fontSize: 16 },
   button: {
-    // justifyContent: 'center',
-    // alignItems: 'center',
-    marginVertical: 10,
+    marginBottom: 20,
     backgroundColor: 'red',
-    width: '80%',
-    padding: 15,
+    paddingVertical: 10,
+    paddingHorizontal: 50,
     borderRadius: 15,
-    alignItems: 'center',
   },
 })
 

@@ -3,31 +3,30 @@ import Carousel from 'react-native-snap-carousel'
 import { addToCart } from '../redux/cartSlice'
 import { useDispatch, useSelector } from 'react-redux'
 import { auth, db } from '../firebase'
+import { useFonts } from 'expo-font'
+import AppLoading from 'expo-app-loading'
 import { MaterialIcons } from '@expo/vector-icons'
 import {
-  SafeAreaView,
   StyleSheet,
-  StatusBar,
-  Platform,
-  ScrollView,
   View,
   Text,
   Image,
   Dimensions,
   ActivityIndicator,
-  FlatList,
+  Alert,
 } from 'react-native'
 import { TouchableOpacity } from 'react-native-gesture-handler'
 
-const imgMassivSlider = [
-  require('../assets/popular/spaisi.jpg'),
-  require('../assets/popular/furo.jpeg'),
-]
 const WIDTH = Dimensions.get('window').width
 const HEIGHT = Dimensions.get('window').height
 const pol_width = WIDTH / 2 - 20
 
 function SpecialOffers() {
+  let [fontsLoaded] = useFonts({
+    'Philosopher-Regular': require('../assets/fonts/Philosopher-Regular.ttf'),
+    'Philosopher-Bold': require('../assets/fonts/Philosopher-Bold.ttf'),
+  })
+
   const [loading, setLoading] = useState(true) // Set loading to true on component mount
   const [offers, setOffers] = useState([]) // Initial empty array of users
   const dispatch = useDispatch()
@@ -73,12 +72,20 @@ function SpecialOffers() {
             <TouchableOpacity
               style={{
                 backgroundColor: 'red',
-                padding: 8,
+                padding: 5,
                 borderRadius: 10,
                 margin: 10,
               }}
             >
-              <Text style={{ color: '#fff', fontSize: 15 }}>Акция!</Text>
+              <Text
+                style={{
+                  color: '#fff',
+                  fontSize: 15,
+                  fontFamily: 'Philosopher-Bold',
+                }}
+              >
+                Акция!
+              </Text>
             </TouchableOpacity>
           </View>
 
@@ -87,7 +94,7 @@ function SpecialOffers() {
               position: 'absolute',
               left: 0,
               bottom: 0,
-              marginBottom: 50,
+              marginBottom: 45,
               margin: 10,
             }}
           >
@@ -96,6 +103,7 @@ function SpecialOffers() {
                 color: '#fff',
                 textDecorationLine: 'line-through',
                 fontSize: 20,
+                fontFamily: 'Philosopher-Regular',
               }}
             >
               {item.price} ₽
@@ -104,7 +112,13 @@ function SpecialOffers() {
           <View
             style={{ position: 'absolute', left: 0, bottom: 0, margin: 10 }}
           >
-            <Text style={{ color: '#fff', fontSize: 30 }}>
+            <Text
+              style={{
+                color: '#fff',
+                fontSize: 30,
+                fontFamily: 'Philosopher-Bold',
+              }}
+            >
               {item.newPrice} ₽
             </Text>
           </View>
@@ -118,10 +132,9 @@ function SpecialOffers() {
             }}
           >
             <TouchableOpacity
-              
               onPress={() => {
                 dispatch(addToCart(item))
-                alert('Добавлено')
+                Alert.alert('', 'Добавлено')
               }}
             >
               <MaterialIcons
@@ -141,7 +154,14 @@ function SpecialOffers() {
               margin: 10,
             }}
           >
-            <TouchableOpacity>
+            <TouchableOpacity
+              onPress={() => {
+                if (item.description === '') {
+                } else {
+                  Alert.alert('Состав:', item.description)
+                }
+              }}
+            >
               <MaterialIcons name="info-outline" size={30} color="white" />
             </TouchableOpacity>
           </View>
@@ -150,6 +170,9 @@ function SpecialOffers() {
     )
   }
 
+  if (!fontsLoaded) {
+    return <AppLoading />
+  }
   return (
     <View style={styles.container}>
       <Carousel

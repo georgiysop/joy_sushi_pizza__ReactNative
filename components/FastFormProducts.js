@@ -4,6 +4,8 @@ import { useDispatch, useSelector } from 'react-redux'
 import { MaterialIcons } from '@expo/vector-icons'
 import FontAwesome from 'react-native-vector-icons/FontAwesome'
 import { auth, db } from '../firebase'
+import { useFonts } from 'expo-font'
+import AppLoading from 'expo-app-loading'
 import {
   StyleSheet,
   View,
@@ -14,6 +16,7 @@ import {
   TouchableOpacity,
   TextInput,
   LogBox,
+  Alert,
 } from 'react-native'
 
 LogBox.ignoreLogs(['Setting a timer'])
@@ -25,11 +28,16 @@ const pol_width = WIDTH / 2 - 20
 // const [{data, loading, error}, searchProducts] =
 
 function FastFormProducts(props) {
+  let [fontsLoaded] = useFonts({
+    'Philosopher-Regular': require('../assets/fonts/Philosopher-Regular.ttf'),
+    'Philosopher-Bold': require('../assets/fonts/Philosopher-Bold.ttf'),
+  })
   const [masterData, setmasterData] = useState([])
   const [search, setsearch] = useState('')
   const [product, setProduct] = useState([]) // Initial empty array of users
   const dispatch = useDispatch()
 
+  
   useEffect(() => {
     const subscriber = db
       // props.product
@@ -67,7 +75,9 @@ function FastFormProducts(props) {
       setsearch(text)
     }
   }
-
+  if (!fontsLoaded) {
+    return <AppLoading />
+  }
   return (
     <View style={styles.container}>
       <View style={styles.sty}>
@@ -91,7 +101,10 @@ function FastFormProducts(props) {
             <View>
               <TouchableOpacity
                 onPress={() => {
-                  alert(item.description)
+                  if (item.description === '') {
+                  } else {
+                    Alert.alert('Состав:', item.description)
+                  }
                 }}
               >
                 <Image
@@ -158,6 +171,7 @@ const styles = StyleSheet.create({
     textDecorationLine: 'underline',
     color: 'red',
     padding: 10,
+    fontFamily: 'Philosopher-Bold',
   },
   addCart: {
     fontSize: 24,
@@ -166,7 +180,7 @@ const styles = StyleSheet.create({
   name: {
     padding: 10,
     fontSize: 14,
-    fontWeight: '700',
+    fontFamily: 'Philosopher-Regular',
   },
   sty: {
     flexDirection: 'row',
@@ -183,6 +197,7 @@ const styles = StyleSheet.create({
   input: {
     fontSize: 20,
     marginLeft: 10,
+    fontFamily: 'Philosopher-Bold',
   },
   // namePriceAdd: {
   //   flexDirection: 'row',

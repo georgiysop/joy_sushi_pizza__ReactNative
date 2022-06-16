@@ -2,7 +2,6 @@ import React, { useState, Component } from 'react'
 import { useNavigation } from '@react-navigation/core'
 import { createStackNavigator } from '@react-navigation/stack'
 import BottomTabNavigator from './TabNavigator'
-import { AntDesign } from '@expo/vector-icons'
 import { Feather } from '@expo/vector-icons'
 import Login from '../screens/loginScreen'
 import Order from '../screens/orderScreen'
@@ -11,7 +10,6 @@ import Fast from '../screens/fastScreen'
 import Info from '../screens/infoScreen'
 import { TouchableOpacity, Linking, Platform } from 'react-native'
 import { View } from 'react-native-animatable'
-import FastHeader from '../components/fastHeader'
 
 const Stack = createStackNavigator()
 const BottomStackNavigator = () => {
@@ -52,6 +50,7 @@ const BottomStackNavigator = () => {
           headerShown: true,
           headerTitle: 'Быстрый заказ',
           headerBackTitle: 'назад',
+
           headerTitleAlign: 'center',
           headerRight: () => (
             <View style={{ flexDirection: 'row', marginRight: 5 }}>
@@ -84,7 +83,10 @@ const BottomStackNavigator = () => {
       <Stack.Screen
         name="Order"
         component={Order}
-        options={{ headerTitle: 'Оформление заказа', headerBackTitle: 'назад' }}
+        options={{
+          headerTitle: 'Оформление заказа',
+          headerBackTitle: 'назад',
+        }}
       />
       <Stack.Screen
         name="Conf"

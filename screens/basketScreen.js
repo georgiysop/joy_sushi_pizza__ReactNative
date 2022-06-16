@@ -13,13 +13,9 @@ import {
   ScrollView,
   TouchableOpacity,
 } from 'react-native'
-// import cartTotalPriceSelector from '../redux/selectors'
+import { useFonts } from 'expo-font'
 import AppLoading from 'expo-app-loading'
-import {
-  useFonts,
-  Philosopher_400Regular,
-  Philosopher_700Bold,
-} from '@expo-google-fonts/philosopher'
+
 import { FlatList } from 'react-native-gesture-handler'
 
 const WIDTH = Dimensions.get('window').width
@@ -27,6 +23,10 @@ const HEIGHT = Dimensions.get('window').height
 const pol_width = WIDTH / 2 - 20
 
 const Basket = ({ navigation }) => {
+  let [fontsLoaded] = useFonts({
+    'Philosopher-Regular': require('../assets/fonts/Philosopher-Regular.ttf'),
+    'Philosopher-Bold': require('../assets/fonts/Philosopher-Bold.ttf'),
+  })
   const cartSelector = (state) => state.cart
   const cartTotalPriceSelector = createSelector([cartSelector], (cart) =>
     cart.reduce(
@@ -41,178 +41,180 @@ const Basket = ({ navigation }) => {
   const cart = useSelector((state) => state.cart)
   const totalPrice = useSelector(cartTotalPriceSelector)
 
-  let [fontsLoaded] = useFonts({
-    Philosopher_400Regular,
-    Philosopher_700Bold,
-  })
-
   if (!fontsLoaded) {
     return <AppLoading />
-  } else {
-    return (
-      <FlatList
-        data={cart}
-        keyExtractor={(item) => item.id}
-        renderItem={({ item }) => (
-          <View style={styles.container}>
-            <View style={styles.viewStyte}>
-              <View style={{ width: pol_width, marginRight: 5 }}>
-                <Image
-                  source={{
-                    uri: item.picture !== '' ? item.picture : undefined,
-                  }}
-                  style={styles.kartinka}
-                />
-              </View>
-              <View style={{ width: pol_width }}>
-                <View>
-                  <Text
-                    style={{
-                      fontSize: 16,
-                      fontWeight: '700',
-                      color: 'red',
-                      textDecorationLine: 'underline',
-                    }}
-                  >
-                    {item.name}
-                  </Text>
-                </View>
-                <View
+  }
+  return (
+    <FlatList
+      data={cart}
+      keyExtractor={(item) => item.id}
+      renderItem={({ item }) => (
+        <View style={styles.container}>
+          <View style={styles.viewStyte}>
+            <View style={{ width: pol_width, marginRight: 5 }}>
+              <Image
+                source={{
+                  uri: item.picture !== '' ? item.picture : undefined,
+                }}
+                style={styles.kartinka}
+              />
+            </View>
+            <View style={{ width: pol_width }}>
+              <View>
+                <Text
                   style={{
-                    flexDirection: 'row',
-                    justifyContent: 'space-between',
-                    marginTop: 25,
+                    fontSize: 16,
+                    fontFamily: 'Philosopher-Regular',
+                    color: 'red',
+                    textDecorationLine: 'underline',
                   }}
                 >
-                  <View style={{ flexDirection: 'row' }}>
-                    <View>
-                      <TouchableOpacity
-                        onPress={() => {
-                          if (item.quantity === 1) {
-                            dispatch(removeItem(item.id))
-                            return
-                          } else {
-                            dispatch(decrement(item.id))
-                          }
-                        }}
-                      >
-                        <AntDesign name={'minussquareo'} size={30} />
-                      </TouchableOpacity>
-                    </View>
-                    <View>
-                      <Text style={{ fontSize: 25, marginHorizontal: 10 }}>
-                        {item.quantity}
-                      </Text>
-                    </View>
-                    <View>
-                      <TouchableOpacity
-                        onPress={() => {
-                          dispatch(increment(item.id))
-                        }}
-                      >
-                        <AntDesign name={'plussquareo'} size={30} />
-                      </TouchableOpacity>
-                    </View>
+                  {item.name}
+                </Text>
+              </View>
+              <View
+                style={{
+                  flexDirection: 'row',
+                  justifyContent: 'space-between',
+                  marginTop: 25,
+                }}
+              >
+                <View style={{ flexDirection: 'row' }}>
+                  <View>
+                    <TouchableOpacity
+                      onPress={() => {
+                        if (item.quantity === 1) {
+                          dispatch(removeItem(item.id))
+                          return
+                        } else {
+                          dispatch(decrement(item.id))
+                        }
+                      }}
+                    >
+                      <AntDesign name={'minussquareo'} size={30} />
+                    </TouchableOpacity>
+                  </View>
+                  <View>
+                    <Text style={{ fontSize: 25, marginHorizontal: 10 ,fontFamily: 'Philosopher-Regular',}}>
+                      {item.quantity}
+                    </Text>
                   </View>
                   <View>
                     <TouchableOpacity
                       onPress={() => {
-                        dispatch(removeItem(item.id))
+                        dispatch(increment(item.id))
                       }}
                     >
-                      <AntDesign
-                        name={'delete'}
-                        size={30}
-                        style={{
-                          marginRight: 10,
-                          justifyContent: 'center',
-                          color: 'red',
-                        }}
-                      />
+                      <AntDesign name={'plussquareo'} size={30} />
                     </TouchableOpacity>
                   </View>
                 </View>
+                <View>
+                  <TouchableOpacity
+                    onPress={() => {
+                      dispatch(removeItem(item.id))
+                    }}
+                  >
+                    <AntDesign
+                      name={'delete'}
+                      size={30}
+                      style={{
+                        marginRight: 10,
+                        justifyContent: 'center',
+                        color: 'red',
+                      }}
+                    />
+                  </TouchableOpacity>
+                </View>
+              </View>
 
-                <View
+              <View
+                style={{
+                  marginLeft: 0,
+                  marginBottom: 0,
+                  paddingTop: 25,
+                  paddingRight: 10,
+                  flexDirection: 'row',
+                  justifyContent: 'space-between',
+                }}
+              >
+                <Text
                   style={{
-                    marginLeft: 0,
-                    marginBottom: 0,
-                    paddingTop: 25,
-                    paddingRight: 10,
-                    flexDirection: 'row',
-                    justifyContent: 'space-between',
+                    color: 'red',
+                    fontSize: 20,
+                    fontFamily: 'Philosopher-Bold',
                   }}
                 >
-                  <Text
-                    style={{
-                      color: 'red',
-                      fontSize: 20,
-                    }}
-                  >
-                    {item.quantity *
-                      (item.newPrice ? item.newPrice : item.price)}{' '}
-                    ₽
-                  </Text>
-                  <Text
-                    style={{
-                      textDecorationLine: 'underline',
-                      fontSize: 14,
-                    }}
-                  >
-                    {item.newPrice ? item.newPrice : item.price} ₽/ шт
-                  </Text>
-                </View>
+                  {item.quantity * (item.newPrice ? item.newPrice : item.price)}{' '}
+                  ₽
+                </Text>
+                <Text
+                  style={{
+                    textDecorationLine: 'underline',
+                    fontSize: 14,
+                    fontFamily: 'Philosopher-Regular',
+                  }}
+                >
+                  {item.newPrice ? item.newPrice : item.price} ₽/ шт
+                </Text>
               </View>
             </View>
           </View>
-        )}
-        ListFooterComponent={() => {
-          return (
-            <View style={styles.contaiiner}>
-              {cart.length === 0 ? (
-                <View style={{ marginTop: 130 }}>
-                  <Image
-                    source={require('../assets/basket/sushi2.png')}
-                    style={styles.imStyle}
-                  />
-                  {/* <Ionicons name={'ios-basket-outline'}  size={200} /> */}
-                  <Text style={styles.basketclear1}>Ваша корзина пуста!</Text>
-                  <Text style={styles.basketclear2}>
-                    Добавьте понравившийся товар из меню.
+        </View>
+      )}
+      ListFooterComponent={() => {
+        return (
+          <View style={styles.contaiiner}>
+            {cart.length === 0 ? (
+              <View style={{ marginTop: pol_width }}>
+                <Image
+                  source={require('../assets/basket/sushi2.png')}
+                  style={styles.imStyle}
+                />
+                {/* <Ionicons name={'ios-basket-outline'}  size={200} /> */}
+                <Text style={styles.basketclear1}>Ваша корзина пуста!</Text>
+                <Text style={styles.basketclear2}>
+                  Добавьте понравившийся товар из меню.
+                </Text>
+              </View>
+            ) : (
+              <View style={{ alignItems: 'center' }}>
+                <Text style={styles.styleText}>
+                  <Text style={{fontFamily: 'Philosopher-Regular',}}>Итого к оплате:</Text>
+                  <Text style={{ fontSize: 24,fontFamily: 'Philosopher-Bold', }}> {totalPrice} ₽</Text>
+                </Text>
+                <TouchableOpacity
+                  style={styles.button}
+                  onPress={() => navigation.navigate('Order')}
+                >
+                  <Text style={{ color: '#fff',fontFamily: 'Philosopher-Bold', }}>
+                    Перейти к оформлению
                   </Text>
-                </View>
-              ) : (
-                <View style={{ alignItems: 'center' }}>
-                  <Text style={styles.styleText}>
-                    Итого к оплате:
-                    <Text style={{ fontSize: 24 }}> {totalPrice} ₽</Text>
-                  </Text>
-                  <TouchableOpacity
-                    style={styles.button}
-                    onPress={() => navigation.navigate('Order')}
-                  >
-                    <Text style={{ color: '#fff' }}>перейти к оформлению</Text>
-                  </TouchableOpacity>
-                  {/* <TouchableOpacity
+                </TouchableOpacity>
+                {/* <TouchableOpacity
                         style={styles.button}
                         onPress={() => navigation.navigate('Home')}
                       >
                         <Text style={{ color: '#fff' }}>к покупкам</Text>
                       </TouchableOpacity> */}
-                </View>
-              )}
-            </View>
-          )
-        }}
-      />
-    )
-  }
+              </View>
+            )}
+          </View>
+        )
+      }}
+    />
+  )
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     margin: 10,
+  },
+  contaiiner: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    textAlign: 'center',
   },
   kartinka: {
     resizeMode: 'stretch',
@@ -231,20 +233,16 @@ const styles = StyleSheet.create({
     padding: 10,
   },
   button: {
-    marginVertical: 10,
+    marginTop: 20,
+    marginBottom: 20,
     backgroundColor: 'red',
-    width: '80%',
-    padding: 15,
+    paddingVertical: 10,
+    paddingHorizontal: 20,
     borderRadius: 15,
-    alignItems: 'center',
   },
   blockText: { marginBottom: 20 },
-  styleText: { fontSize: 18, fontWeight: 'bold', color: 'red' },
-  contaiiner: {
-    justifyContent: 'center',
-    alignItems: 'center',
-    textAlign: 'center',
-  },
+  styleText: { fontSize: 18, color: 'red' },
+
   imStyle: {
     resizeMode: 'contain',
     width: WIDTH,
@@ -256,10 +254,9 @@ const styles = StyleSheet.create({
   basketclear1: {
     color: '#000',
     fontSize: 20,
-    fontWeight: 'bold',
     marginBottom: 10,
     textAlign: 'center',
-    fontFamily: 'Philosopher_700Bold',
+    fontFamily: 'Philosopher-Bold',
   },
   basketclear2: {
     color: '#000',
@@ -268,7 +265,7 @@ const styles = StyleSheet.create({
     paddingLeft: 40,
     paddingRight: 40,
     textAlign: 'center',
-    fontFamily: 'Philosopher_400Regular',
+    fontFamily: 'Philosopher-Regular',
   },
 })
 
