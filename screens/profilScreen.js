@@ -1,8 +1,10 @@
 import { useNavigation } from '@react-navigation/core'
 import React, { useReducer, useState, useEffect } from 'react'
+
 import { auth, db } from '../firebase'
 import { useFonts } from 'expo-font'
 import AppLoading from 'expo-app-loading'
+import Checkbox from 'expo-checkbox'
 import {
   StyleSheet,
   View,
@@ -10,9 +12,12 @@ import {
   TouchableOpacity,
   TextInput,
   ScrollView,
+  Linking,
+  Alert,
 } from 'react-native'
 
 const Profil = () => {
+  const [isChecked, setChecked] = useState(false)
   let [fontsLoaded] = useFonts({
     'Philosopher-Regular': require('../assets/fonts/Philosopher-Regular.ttf'),
     'Philosopher-Bold': require('../assets/fonts/Philosopher-Bold.ttf'),
@@ -27,7 +32,6 @@ const Profil = () => {
       .get()
       .then((documentSnapshot) => {
         if (documentSnapshot.exists) {
-          console.log('User Data', documentSnapshot.data())
           setUserData(documentSnapshot.data())
         }
       })
@@ -48,8 +52,10 @@ const Profil = () => {
   }
 
   const save = () => {
+    Alert.alert('', 'Данные сохранены')
     const user = auth.currentUser
-    db.collection('users')
+    return db
+      .collection('users')
       .doc(user.uid)
       .update({
         name: userData.name,
@@ -127,16 +133,46 @@ const Profil = () => {
           </View>
         </View>
         <View style={styles.save}>
-          <TouchableOpacity style={styles.button} onPress={save}>
-            <Text style={styles.buttonText}>сохранить</Text>
-          </TouchableOpacity>
-          
-          {/* <TouchableOpacity style={styles.button}>
+          <View style={{ flexDirection: 'row' }}>
+            <Checkbox
+              style={{ marginRight: 10 }}
+              value={isChecked}
+              onValueChange={setChecked}
+            />
+            <View>
+              <TouchableOpacity
+                style={{ marginBottom: 10 }}
+                onPress={() => {
+                  Linking.openURL(
+                    'https://vk.com/doc154604418_641238921?hash=kNCZUCAJcZSXrrmlZm9VQJbLKA7IQqFTB1fobzZqOYc&dl=CgNE4zk09GLCFxqMWZuF8zI29az1dmyz7R6i60ptWdk'
+                  )
+                }}
+              >
+                <Text style={{ color: 'blue' }}>
+                  политика конфиденциальности
+                </Text>
+                <Text style={{ color: 'blue' }}> персональных данных</Text>
+              </TouchableOpacity>
+            </View>
+          </View>
+
+          {isChecked ? (
+            <TouchableOpacity style={styles.button} onPress={() => save()}>
+              <Text style={styles.buttonText}>сохранить</Text>
+            </TouchableOpacity>
+          ) : (
+            <View></View>
+          )}
+
+          <TouchableOpacity
+            style={styles.button}
+            onPress={() => navigation.navigate('Myorder')}
+          >
             <Text style={styles.buttonText}>Мои заказы</Text>
-          </TouchableOpacity> */}
+          </TouchableOpacity>
         </View>
 
-        <View style={{ width: '85%', alignItems: 'center', marginTop: 20 }}>
+        <View style={{ width: '85%', alignItems: 'center' }}>
           <Text style={{ fontFamily: 'Philosopher-Bold' }}>
             Аккаунт: {auth.currentUser?.email}
           </Text>
@@ -158,6 +194,8 @@ const styles = StyleSheet.create({
   },
   form: { width: '85%', alignItems: 'center', marginTop: 50 },
   button: {
+    marginBottom: 10,
+    marginTop: 10,
     backgroundColor: 'red',
     width: '100%',
     padding: 10,

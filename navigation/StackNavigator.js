@@ -8,6 +8,7 @@ import Order from '../screens/orderScreen'
 import Conf from '../screens/confScreen'
 import Fast from '../screens/fastScreen'
 import Info from '../screens/infoScreen'
+import Myorder from '../screens/myOrders'
 import { TouchableOpacity, Linking, Platform } from 'react-native'
 import { View } from 'react-native-animatable'
 
@@ -40,6 +41,16 @@ const BottomStackNavigator = () => {
           headerShown: true,
           headerBackTitle: 'назад',
           headerTitle: 'Инфо',
+          headerTitleAlign: 'center',
+        }}
+      />
+      <Stack.Screen
+        name="Myorder"
+        component={Myorder}
+        options={{
+          headerShown: true,
+          headerBackTitle: 'назад',
+          headerTitle: 'Мои заказы',
           headerTitleAlign: 'center',
         }}
       />

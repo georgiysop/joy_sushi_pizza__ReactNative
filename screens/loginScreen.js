@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react'
 import AppLoading from 'expo-app-loading'
 import { useFonts } from 'expo-font'
 import { db, auth } from '../firebase'
+import { getAuth, sendPasswordResetEmail,sendEmailVerification } from "firebase/auth";
 import {
   StyleSheet,
   Text,
@@ -82,7 +83,7 @@ const Login = () => {
       .then((userCredentials) => {
         const user = userCredentials.user
         console.log('Зарегистрирован: ', user.email)
-        // userCredentials.user.sendEmailVerification()
+        sendEmailVerification(getAuth().currentUser)
         return db
           .collection('users')
           .doc(userCredentials.user.uid)
@@ -100,7 +101,6 @@ const Login = () => {
       .catch((error) => alert(error.message))
   }
 
-
   const handleLogin = () => {
     auth
       .signInWithEmailAndPassword(email, password)
@@ -111,27 +111,28 @@ const Login = () => {
       .catch((error) => alert(error.message))
   }
 
-  const addCol = () => {
-    Pizza25.forEach(function(obj) {
-      return db
-        .collection('Салаты')
-        .doc()
-        .set({
-          id: obj.id,
-          category_id: obj.category_id,
-          name: obj.name,
-          description: obj.description,
-          price: obj.price,
-          picture: obj.picture,
-        })
-        .then(function(docRef) {
-          console.log('Document written with ID: ')
-        })
-        .catch(function(error) {
-          console.error('Error adding document: ', error)
-        })
-    })
-  }
+  // const addCol = () => {
+  //   Pizza25.forEach(function(obj) {
+  //     return db
+  //       .collection('Салаты')
+  //       .doc()
+  //       .set({
+  //         id: obj.id,
+  //         category_id: obj.category_id,
+  //         name: obj.name,
+  //         description: obj.description,
+  //         price: obj.price,
+  //         picture: obj.picture,
+  //       })
+  //       .then(function(docRef) {
+  //         console.log('Document written with ID: ')
+  //       })
+  //       .catch(function(error) {
+  //         console.error('Error adding document: ', error)
+  //       })
+  //   })
+  // }
+
   if (!fontsLoaded) {
     return <AppLoading />
   }
@@ -179,8 +180,7 @@ const Login = () => {
           style={{ marginBottom: 30, marginTop: 10 }}
           onPress={() => {
             if (email != '') {
-              auth
-                .sendPasswordResetEmail(email)
+              sendPasswordResetEmail(getAuth(), email)
                 .then(function() {
                   console.log('sent ')
                 })
